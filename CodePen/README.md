@@ -45,11 +45,12 @@ akabekoさんがMakedownからHTMLへの変換にとどめておいてくださ�
 
 抄録abstractなど、1つの段落に見えて、中身に構造を要求されることがあります(実際に見出しを付けた[structured abstract](https://en.wikipedia.org/wiki/Abstract_(summary)#Structure)もあります)。その構造に見出しを付けて各要素をブロック表示で編集したり、各要素をインラインにして全体で1つのブロックとして編集したりと切り替えられます。
 
-<iframe height="300" style="width: 100%;" scrolling="no" title="Abstract" src="https://codepen.io/yamahige/embed/qBGdjXM?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href="https://codepen.io/yamahige/pen/qBGdjXM">
+<p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="qBGdjXM" data-pen-title="Abstract" data-user="yamahige" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/yamahige/pen/qBGdjXM">
   Abstract</a> by Taku Yamaguchi (<a href="https://codepen.io/yamahige">@yamahige</a>)
-  on <a href="https://codepen.io">CodePen</a>.
-</iframe>
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
 ### 遠く離れた部分を近くに配置して、見比べながら編集できます。
 
