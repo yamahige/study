@@ -1,0 +1,560 @@
+<html class="">
+
+<head>
+    <meta charset="UTF-8">
+    <title>行頭と約物</title>
+    <style>
+        :root {
+            text-spacing-trim: trim-start;
+
+            max-inline-size: 40em;
+            block-size: min-content;
+
+            --box-border: thin solid darkorange;
+            --sample-border: thin solid green;
+        }
+
+        .off {
+            text-autospace: no-autospace;
+            text-spacing-trim: space-all;
+        }
+
+        figure {
+            margin-inline: 2em;
+            break-inside: avoid;
+        }
+        div.sample {
+            break-inside: avoid;
+            inline-size: 25em;
+            margin-block: 0 1em;
+            margin-inline: 0;
+            padding-block: .5em;
+            padding-inline-end: .5em;
+            outline: var(--sample-border);
+        }
+
+        div.sample.vertical {
+            writing-mode: vertical-rl;
+            margin-block: 0;
+            margin-inline: 0 1em;
+        }
+
+        p,
+        div {
+            padding: 0;
+        }
+
+        div,
+        section>p {
+            margin: 0;
+        }
+
+        p {
+            margin-block: 1em;
+            margin-inline: 0;
+        }
+
+        code {
+            white-space: pre;
+            font-size: 1rem;
+            padding-inline: .3em;
+            background-color: gainsboro;
+        }
+
+        h2 {
+            margin-block: 3em 2em;
+            border-inline-start: thick double green;
+            padding-inline-start: 1em;
+            font-size: 120%;
+        }
+
+        h3,
+        h4 {
+            font-size: 1em;
+        }
+
+        h3 {
+            border-inline-start: thick solid olive;
+            padding-inline-start: 1em;
+        }
+
+        /* 自動生成テキスト */
+
+        .generate::before {
+            content: "「全角の括弧」";
+            display: inline;
+        }
+
+        /* 箇条書き */
+
+        ol {
+            margin-block: 0;
+        }
+
+        /*
+        ol::before {
+            content: "." attr(class);
+            color: crimson;
+        }
+        */
+
+        /* 番号をfloatで配置 */
+
+        div.float,
+        ol.float {
+            list-style-type: none;
+            --list-padding: 2.5em;
+            padding-inline-start: var(--list-padding);
+        }
+
+        .float>.item,
+        ol.float>li {
+            display: flow-root;
+        }
+
+        .float>.item::before,
+        ol.float>li::before {
+            float: inline-start;
+            margin-inline-start: calc(-1 * var(--list-padding));
+            min-inline-size: var(--list-padding);
+        }
+        .float-label::before,
+        .float>.item::before,
+        ol.float>li::before {
+            content: "（FLOATFLOAT）";
+            padding-inline: 0;
+            background-color: black;
+            color: white;
+        }
+
+        /* 図 */
+
+        .figure-body {
+            float: inline-start;
+            border: thin solid darkorange;
+        }
+        .figure-dummy {
+            block-size: 5em;
+            inline-size: 10em;
+            border: thin solid blue;
+            display: grid;
+            place-items: center;
+        }
+        .caption {
+            text-align: start;
+        }
+        .caption::before {
+            content: "（図）";
+        }
+
+        /* 表 */
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td:first-child {
+            white-space: pre;
+        }
+
+        table,
+        td {
+            vertical-align: top;
+            border: var(--box-border);
+        }
+
+        /* グリッドレイアウト */
+
+        .grid {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            column-gap: 0;
+            row-gap: 0;
+        }
+
+        .grid>* {
+            outline: var(--box-border);
+        }
+
+        /* フレックスボックスレイアウト */
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .flex>* {
+            flex: 1 1 auto;
+            inline-size: 48%;
+            outline: var(--box-border);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>行頭と約物</h1>
+
+    <p>このページ全体（<code>:root</code>）に次のCSSを設定しています:</p>
+    <p><code>:root {
+    text-spacing-trim: trim-start;
+}</code></p>
+    <p>そこで、この設定をサポートしていれば行頭約物と連続約物が詰められて（約物に組み込まれた空白が削除されて）、視覚的に行頭が揃うはずです。詰められていなければ次のいずれかでしょう:</p>
+    <ul>
+        <li><code>text-spacing-trim: trim-start;</code>をサポートしていない</li>
+        <li>そこを行頭約物あるいは連続約物とみなしていない</li>
+    </ul>
+
+    <p>以下、段落などの中の括弧は全角（和文括弧）です。</p>
+
+    <section>
+        <h2>段落（<code>p</code>要素）</h2>
+
+        <p>「そもそも約物の詰め（<code>text-spacing-trim: trim-start;</code>）をサポートしているか？」を確認できるはずです。</p>
+
+        <h3>詰める</h3>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <h3>詰めない、全角のまま</h3>
+
+        <p>比較のため、同じ段落で、スタイルを「詰めない／全角のまま」（<code>text-spacing-trim: space-all;</code>）に設定した場合。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample off">
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical off">
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+    
+    </section>
+
+    <section>
+        <h2>自動生成テキスト（<code>content</code>プロパティ）</h2>
+
+        <p>次の例で、段落の先頭にある「<span class="generate"></span>」部分は（この説明文中も含めて）先頭と末尾の括弧が全角で、自動生成されています。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <p><span class="generate"></span>ああああ</p>
+                <p><span class="generate"></span>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p><span class="generate"></span>（「ああ」）ああ</p>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <p><span class="generate"></span>ああああ</p>
+                <p><span class="generate"></span>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p><span class="generate"></span>（「ああ」）ああ</p>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h2>順序なしリスト（列挙、<code>ul</code>要素）</h2>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ul>
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</li>
+                    <li>（「ああ」）ああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ul>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ul>
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</li>
+                    <li>（「ああ」）ああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ul>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h2>順序付き（番号付き）リスト（列挙、<code>ol</code>要素）</h2>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol>
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</li>
+                    <li>（「ああ」）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol>
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</li>
+                    <li>（「ああ」）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h2>回り込み（<code>float</code>プロパティ）</h2>
+
+        <p>リストの番号などの部分を回り込みで配置する例です（リストの番号の配置に回り込みを使う理由は別記事にします）。<span class="float-label"></span>部分は（この説明文中も含めて）先頭と末尾の括弧が全角、自動生成されています。また、サンプルでは左寄せ（縦組みでは上寄せ<code>float: inline-start;</code>）に設定しています。比較のため、サンプルの後ろに詰めた段落の例を続けます。</p>
+
+        <h3><code>ol</code>要素を使った実装</h3>
+
+        <p><code>ol</code>要素や<code>li</code>要素を使う実装例です。アクセシビリティのために<code>ol</code>要素などを使います。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float">
+                    <li>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</li>
+                    <li>ああああああああああああ「（ああああああああ）」。ああああああああああああああああああああ。</li>
+                </ol>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float">
+                    <li>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</li>
+                    <li>ああああああああああああ「（ああああああああ）」。ああああああああああああああああああああ。</li>
+                </ol>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <h3><code>ul</code>や<code>ol</code>というリスト要素を使わない実装</h3>
+
+        <p><code>ul</code>や<code>ol</code>というリスト要素を使わず、<code>div</code>要素の組み合わせで実装する例です。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <div class="float">
+                    <div class="item">
+                        <div class="label"></div>
+                        <div>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</div>
+                    </div>
+                    <div class="item">
+                        <div class="label"></div>
+                        <div>ああああああああああああ「（ああああああああ）」。ああああああああああああああああああああ。</div>
+                    </div>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <div class="float">
+                    <div class="item">
+                        <div>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</div>
+                    </div>
+                    <div class="item">
+                        <div>ああああああああああああ「（ああああああああ）」。ああああああああああああああああああああ。</div>
+                    </div>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+    
+    </section>
+
+    <section>
+        <h2>表</h2>
+
+        <p>表（<code>table</code>要素）では複数の要素を字詰め方向に並べられます。次の例では、1つの行（row）に2つのセル（cell）があり、行（row）の上端には2つの行（line）すなわち2つの行頭があるはずです。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <table>
+                    <tr>
+                        <td>ああああ</td>
+                        <td>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</td>
+                    </tr>
+                    <tr>
+                        <td>「ああ。」</td>
+                        <td>ああああああああああああああああああああああ</td>
+                    </tr>
+                </table>
+            <p>ああああ</p>
+            <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+            <p>（「ああ」）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <table>
+                    <tr>
+                        <td>ああああ</td>
+                        <td>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</td>
+                    </tr>
+                    <tr>
+                        <td>「ああ。」</td>
+                        <td>ああああああああああああああああああああああ</td>
+                    </tr>
+                </table>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+                </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h2>グリッドレイアウト</h2>
+
+        <p>グリッドレイアウト（<code>display: grid;</code>）では、字詰め方向に段落など要素を複数並べられます。次の例では、1つの行（row）に2つのアイテム（item）があり、行（row）の上端には2つの行（line）すなわち2つの行頭があるはずです。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <div class="grid">
+                    <p>ああああ</p>
+                    <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                    <p>「ああ。」</p>
+                    <p>ああああああああああああああああああああああ</p>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+                </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <div class="grid">
+                    <p>ああああ</p>
+                    <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                    <p>「ああ。」</p>
+                    <p>ああああああああああああああああああああああ</p>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+                </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h2>フレックスボックスレイアウト</h2>
+
+        <p>フレックスボックスレイアウト（<code>display: flex;</code>）では字詰め方向に段落など要素を複数並べられます。次の例では、主軸（main axis、図では字詰め方向）上に2つのアイテム（item）があり、主軸（main axis）の上端（縦組みでは右端）には2つの行（line）すなわち2つの行頭があるはずです。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <div class="flex">
+                    <p>ああああ</p>
+                    <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                    <p>「ああ。」</p>
+                    <p>ああああああああああああああああああああああ</p>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+                </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <div class="flex">
+                    <p>ああああ</p>
+                    <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                    <p>「ああ。」</p>
+                    <p>ああああああああああああああああああああああ</p>
+                </div>
+                <p>ああああ</p>
+                <p>「ああああああああああああああああああああ、ああああああああああああああああああああ。」</p>
+                <p>（「ああ」）ああ</p>
+                </div>
+        </figure>
+
+    </section>
+
+    <p style="text-align: end;">以上</p>
+
+</body>
+
+</html>
