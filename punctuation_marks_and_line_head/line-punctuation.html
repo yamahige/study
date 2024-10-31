@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>行頭と約物</title>
+    <title>行頭および連続する約物</title>
     <style>
         :root {
             text-spacing-trim: trim-start;
@@ -12,6 +12,9 @@
 
             --box-border: thin solid darkorange;
             --sample-border: thin solid green;
+        }
+        @page {
+            size: a4 portrait;
         }
 
         .off {
@@ -197,11 +200,11 @@
 <body>
     <h1>行頭と約物</h1>
 
-    <p>このページ全体（<code>:root</code>）に次のCSSを設定しています:</p>
+    <p>この文章全体（<code>:root</code>）に次のCSSを設定しています:</p>
     <p><code>:root {
     text-spacing-trim: trim-start;
 }</code></p>
-    <p>そこで、この設定をサポートしていれば行頭約物と連続約物が詰められて（約物に組み込まれた空白が削除されて）、視覚的に行頭が揃うはずです。詰められていなければ次のいずれかでしょう:</p>
+    <p>そこで、この設定をビューアがサポートしていれば行頭約物と連続約物が詰められて（約物に組み込まれた空白が削除されて）、視覚的に行頭が揃うはずです。詰められていなければ次のいずれかでしょう:</p>
     <ul>
         <li><code>text-spacing-trim: trim-start;</code>をサポートしていない</li>
         <li>そこを行頭約物あるいは連続約物とみなしていない</li>
@@ -212,7 +215,7 @@
     <section>
         <h2>段落（<code>p</code>要素）</h2>
 
-        <p>「そもそも約物の詰め（<code>text-spacing-trim: trim-start;</code>）をサポートしているか？」を確認できるはずです。</p>
+        <p>次の例で、ビューアが約物の詰め（<code>text-spacing-trim: trim-start;</code>）をサポートしているか？を確認できるはずです。</p>
 
         <h3>詰める</h3>
 
@@ -236,7 +239,7 @@
 
         <h3>詰めない、全角のまま</h3>
 
-        <p>比較のため、同じ段落で、スタイルを「詰めない／全角のまま」（<code>text-spacing-trim: space-all;</code>）に設定した場合。</p>
+        <p>比較のため、同じ段落で、スタイルを「詰めない／全角のまま」（<code>text-spacing-trim: space-all;</code>）に設定した例です。</p>
 
         <figure>
             <figcaption>横組み</figcaption>
