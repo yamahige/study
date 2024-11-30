@@ -1,0 +1,1160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CSS箇条書きの約物</title>
+    <style>
+        :root {
+            text-autospacing: auto;
+            text-spacing-trim: trim-start;
+            text-spacing-trim: trim-both;
+            text-spacing: auto;
+            text-align: justify;
+
+            font-family: serif;
+            max-inline-size: 40em;
+
+            --counter-style-en: decimal;
+            --counter-style-cjk: cjk-decimal;
+            --counter-style: var(--counter-style-en);
+            --box-border: thin solid darkorange;
+            /*
+            --sample-border: thin solid green;
+            */
+            --sample-border: none;
+        }
+
+        figure {
+            margin-inline: 2em;
+        }
+        div.sample {
+            break-inside: avoid;
+            max-inline-size: 25em;
+            margin-block: 1em;
+            margin-inline: 0;
+            padding-block: .5em;
+            padding-inline-end: .5em;
+            outline: var(--sample-border);
+        }
+
+        div.sample.vertical {
+            writing-mode: vertical-rl;
+            margin-block: 0;
+            margin-inline: 1em;
+        }
+
+        p,
+        div {
+            padding: 0;
+        }
+
+        div,
+        section>p {
+            margin: 0;
+        }
+
+        p {
+            margin-block: 1em;
+            margin-inline: 0;
+        }
+
+        code {
+            white-space: pre;
+            font-size: 1rem;
+            padding-inline: .3em;
+            background-color: gainsboro;
+        }
+
+        h2 {
+            margin-block: 3em 2em;
+            border-inline-start: thick double green;
+            border-block-start: thin solid green;
+            padding-inline-start: 1em;
+            font-size: 120%;
+        }
+
+        h3,
+        h4 {
+            font-size: 1em;
+        }
+
+        h3 {
+            border-inline-start: thick solid lightgreen;
+            padding-inline-start: 1em;
+        }
+
+        ol {
+            margin-block: 0;
+        }
+
+        ol::before {
+            content: "." attr(class);
+            color: crimson;
+        }
+
+        /* 順序ラベル */
+
+        @counter-style counter-n-Han-p-Han {
+            system: extends decimal;
+            prefix: "(";
+            suffix: ")";
+        }
+
+        ol.counter-n-Han-p-Han {
+            list-style-type: counter-n-Han-p-Han;
+        }
+
+        @counter-style counter-n-Han-p-Zen {
+            system: extends decimal;
+            prefix: "（";
+            suffix: "）";
+        }
+
+        ol.counter-n-Han-p-Zen {
+            list-style-type: counter-n-Han-p-Zen;
+        }
+
+        @counter-style counter-n-CJK-p-Non {
+            system: extends cjk-decimal;
+        }
+
+        ol.counter-n-CJK-p-Non {
+            list-style-type: counter-n-CJK-p-Non;
+        }
+
+        @counter-style Period {
+            system: extends decimal;
+            suffix: "、";
+        }
+
+        @counter-style TCU {
+            system: extends decimal;
+            suffix: "";
+        }
+
+        ol.CJK,
+        ul.CJK {
+            font-family: serif;
+        }
+        ol.TCU {
+            list-style-type: TCU;
+        }
+
+        ol.TCU> ::marker {
+            text-combine-upright: all;
+        }
+
+        /* 番号をinline-blockで配置 */
+
+        ol.inline-block {
+            list-style-type: none;
+            counter-reset: custom-counter 0;
+            --list-padding: 2em;
+            padding-inline-start: var(--list-padding);
+        }
+
+        ol.inline-block>li {
+            counter-increment: custom-counter;
+            display: flow-root;
+        }
+
+        ol.inline-block>li::before {
+            display: inline-block;
+            margin-inline-start: calc(-1 * var(--list-padding));
+            min-inline-size: var(--list-padding);
+        }
+
+        ol.inline-block.counter-n-Han-p-Han>li::before {
+            content: "(" counter(custom-counter, var(--counter-style-en)) ")";
+        }
+
+        ol.inline-block.counter-n-Han-p-Zen>li::before {
+            content: "（" counter(custom-counter, var(--counter-style-en)) "）";
+        }
+
+        ol.inline-block.counter-n-Han-p-Han.CJK>li::before {
+            content: counter(custom-counter, var(--counter-style-cjk));
+            margin-inline-end: 1em;
+            font-family: serif;
+            /*
+            content: counter(custom-counter, var(--counter-style-cjk)) "、";
+            content: "(" counter(custom-counter, var(--counter-style-cjk)) ")";
+            */
+        }
+
+        ol.inline-block.counter-n-Han-p-Zen.CJK>li::before {
+            content: "（" counter(custom-counter, var(--counter-style-cjk)) "）";
+        }
+
+        ol.inline-block.manual-TCU>li>.marker {
+            margin-inline-start: calc(-1 * var(--list-padding));
+        }
+
+        ol.inline-block.manual-TCU>li>.marker>.number::before {
+            content: counter(custom-counter, var(--counter-style-en));
+            text-combine-upright: all;
+            text-align: center;
+        }
+
+        /* 番号をfloatで配置 */
+
+        .simple-float>.item {
+            display: flow-root;
+        }
+
+        .simple-float>.item>.label {
+            float: inline-start;
+            min-inline-size: var(--list-padding);
+            outline: auto;
+        }
+
+        ol.float {
+            list-style-type: none;
+            counter-reset: custom-counter 0;
+            --list-padding: 2.5em;
+            padding-inline-start: var(--list-padding);
+        }
+
+        ol.float>li {
+            counter-increment: custom-counter;
+            display: flow-root;
+        }
+
+        ol.float.manual-TCU>li>.marker,
+        ol.float>li::before {
+            float: inline-start;
+            margin-inline-start: calc(-1 * var(--list-padding));
+            min-inline-size: var(--list-padding);
+        }
+
+        ol.float.counter-n-Han-p-Han>li::before {
+            content: "(" counter(custom-counter, var(--counter-style)) ")";
+            margin-inline-end: .5em;
+        }
+
+        ol.float.counter-n-Han-p-Zen>li::before {
+            content: "（" counter(custom-counter, var(--counter-style)) "）";
+            margin-inline-end: .5em;
+        }
+
+        ol.float.TCU>li::before {
+            text-combine-upright: 3;
+            margin-inline-start: calc(-1 * var(--list-padding));
+            text-align: start;
+        }
+
+        ol.float.counter-n-Han-p-Han.TCU>li::before {
+            content: "(" counter(custom-counter, var(--counter-style-en)) ")";
+        }
+
+        ol.float.counter-n-Han-p-Zen.TCU>li::before {
+            content: "（" counter(custom-counter, var(--counter-style-en)) "）";
+        }
+
+        ol.float.manual-TCU>li>.marker {
+            margin-inline-start: calc(-1 * var(--list-padding));
+        }
+
+        ol.float.manual-TCU>li>.marker>.number::before {
+            content: counter(custom-counter, var(--counter-style-en));
+            text-combine-upright: all;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <p>:rootに次のCSSが設定されているので、ChromeでもVivliostyleでも、少なくとも先頭の約物は詰められるはず:</p>
+    <p><code>:root {
+    text-autospacing: auto;
+    text-spacing-trim: trim-start;
+    text-spacing-trim: trim-both;
+    text-spacing: auto;
+    text-align: justify;
+    font-family: serif;
+}</code></p>
+
+    <section>
+        <h2>ポイント</h2>
+        <h3>特徴のポイント</h3>
+        <ul>
+            <li>順序ラベルの番号: アラビア数字／全角のアラビア数字</li>
+            <li>順序ラベルの番号の後ろの句読点: ピリオド「.」／読点「、」</li>
+            <li>順序ラベルの番号の前後の括弧: 欧文括弧／和文括弧</li>
+            <li>順序ラベルの先頭／末尾の約物を詰める／詰めない</li>
+            <li>箇条本体の先頭の約物を詰める／詰めない</li>
+            <li>順序ラベルの揃え: 左揃え／右揃え</li>
+            <li>縦書きの場合、順序ラベルのアラビア数字の縦中横</li>
+            <li>縦書きの場合、順序ラベルで縦中横にした番号の前後の括弧: 上下／左右</li>
+            <li>順序ラベルの番号が漢数字</li>
+            <li>順序ラベルの番号の漢数字を上下に縮める（平体？）</li>
+            <li>順序ラベルと箇条本体の関係: 連続するテキスト／別々の領域にある</li>
+            </li>
+        </ul>
+        <h3>HTML+CSSで実現する方式のポイント</h3>
+        <ul>
+            <li>順序ラベルの配置の実現方式。CSSではマーカーと呼ぶようだ、<code>::marker</code>疑似要素</li>
+            <li><code>@counter-style</code>によって番号の数字（アラビア数字、漢数字、…）や前後の括弧を設定し、<code>::marker</code>疑似要素によって縦中横や色を設定できる。</li>
+            <li>順序ラベルを<code>inline-block</code>と設定して、箇条本体と連続するテキストになるようだ。<code>block</code>と設定すると箇条本体と連続するテキストにはならないようだ。</li>
+            <li>順序ラベルを<code>block</code>と設定し、<code>float: inline-start;</code>と設定すると、左揃え／上揃えにできる。</li>
+            <li>処理系・ブラウザーの約物詰め詰め(trimming)機能</li>
+            <li>番号(マーカー)の揃えの実現方式</li>
+            <li>番号(マーカー)内の構造</li>
+            <li>括弧を縦組み、番号を縦中横にできるか？</li>
+            <li>本体の先頭の約物の詰め(trimming)</li>
+            <li>番号の先頭・末尾の約物の詰め(trimming)</li>
+            <li>番号と本体は直接隣り合っていると、処理系はみなしているか？</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>ビューアーの約物詰め(trimming)機能の確認</h2>
+
+        <h3>段落</h3>
+
+        <p>HTML+CSSの既定の段落。処理系・ブラウザーに、先頭の約物を詰める機能があるか？3つの段落で確認。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <p>ああああ</p>
+                <p>「あああああああああああああああ。」「（あああああああああああ。）」</p>
+                <p>（ああ）ああ</p>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <p>ああああ</p>
+                <p>「あああああああああああああああ。」「（あああああああああああ。）」</p>
+                <p>（ああ）ああ</p>
+            </div>
+        </figure>
+
+        <h3>順序なしリスト</h3>
+
+        <p>HTML+CSSの既定の順序なしリスト</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ul>
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ul>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ul>
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ul>
+            </div>
+        </figure>
+
+        <h3>順序付き(番号付き)リスト</h3>
+
+        <p>HTML+CSSの既定の順序付きリスト</p>
+
+    </section>
+
+    <section>
+        <h2>順序ラベルの番号: アラビア数字／全角のアラビア数字／漢数字</h2>
+    
+        <section>
+            <h3>アラビア数字</h3>
+
+            <figure>
+                <figcaption>横組み</figcaption>
+                <div class="sample">
+                    <ol>
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>
+    
+            <figure>
+                <figcaption>縦組み</figcaption>
+                <div class="sample vertical">
+                    <ol>
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>        
+        </section>
+
+        <section>
+            <h3>全角のアラビア数字</h3>
+        </section>
+
+        <section>
+            <h3>漢数字</h3>
+    
+            <figure>
+                <figcaption>横組み</figcaption>
+                <div class="sample">
+                    <ol class="counter-n-CJK-p-Non">
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>
+    
+            <figure>
+                <figcaption>縦組み</figcaption>
+                <div class="sample vertical">
+                    <ol class="counter-n-CJK-p-Non">
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>
+        </section>
+    </section>
+
+    <section>
+        <h2>括弧（パーレン）</h2>
+        <section>
+            <h3>アラビア数字</h3>
+            <figure>
+                <figcaption>横組み</figcaption>
+                <div class="sample">
+                    <ol class="counter-n-Han-p-Han">
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>
+    
+            <figure>
+                <figcaption>縦組み</figcaption>
+                <div class="sample vertical">
+                    <ol class="counter-n-Han-p-Han">
+                        <li>ああああ</li>
+                        <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                        <li>（ああ）ああ</li>
+                        <li value="9">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="99">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                        <li value="999">ああああああああああああああああああああああああ</li>
+                        <li>ああああああああああああああああああああああああ</li>
+                    </ol>
+                </div>
+            </figure>
+        </section>
+    </section>
+
+    <h2>以降はストック</h2>
+
+    <h2>リストを<code>@counter-style</code>や<code>::marker</code>でカスタマイズ</h2>
+
+    <h3>順序付き(番号付き)リスト</h3>
+
+    <section>
+        <h4>番号の括弧は欧文括弧、本体の括弧は和文括弧</h4>
+
+        <p>既定のリスト<code>ol</code>を元に<code>@counter-style</code>アットルールを使って、欧文括弧付きの番号を定義した。</p>
+        <p>Chromeでは、既定の順序付きリスト<code>ol</code>の番号は右揃え。桁が大きくなると左側に溢れるが、溢れないように全体一律に番号用の幅を広くできる。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h4>番号の括弧は和文括弧、本体の括弧は和文括弧</h4>
+
+        <p>既定のリスト<code>ol</code>を元に<code>@counter-style</code>アットルールを使って、和文括弧付きの番号を定義した。</p>
+        <p>本体の"あ"や"「"や"（"(和文括弧)は行頭にあるのか否か？あるいは、番号の"）"と本体の"「"とは隣り合ってるのか？</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「あああああああああああああああ。」「（あああああああああああ。）」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="999">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号に括弧なし、縦中横</h4>
+
+        <p>番号の前後の括弧は縦にしたいが、<code>::marker</code>疑似要素に<code>text-combine-upright</code>を指定すると番号の括弧まで含めて縦中横になってしまう</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="TCU">
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="TCU">
+                    <li>ああああ</li>
+                    <li>「ああああああああああああああああああああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li value="9">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li value="99">ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <h3>リストの番号を<code>inline-block</code>で配置</h3>
+
+    <section>
+        <h4>番号を左揃え、番号の括弧は欧文括弧、本体の括弧は和文括弧</h4>
+
+        <p>番号が左揃え、番号の桁数が増えると本体に入り込む。書籍や学術雑誌で見かける。既定のリスト<code>ol</code>に大幅に手を加えて作成。</p>
+        <p>番号の"）"と本体の"「"とは隣り合ってるのか？</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号を左揃え、番号の括弧は和文括弧、本体の括弧は和文括弧</h4>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号をCJK、左揃え、番号の括弧は欧文括弧、本体の括弧は和文括弧</h4>
+
+        <p>番号が左揃え、番号の桁数が増えると本体に入り込む。書籍や学術雑誌で見かける。既定のリスト<code>ol</code>に大幅に手を加えて作成。</p>
+        <p>番号の"）"と本体の"「"とは隣り合ってるのか？</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block counter-n-Han-p-Han CJK">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block counter-n-Han-p-Han CJK">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号をCJK、左揃え、番号の括弧は和文括弧、本体の括弧は和文括弧</h4>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block counter-n-Han-p-Zen CJK">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block counter-n-Han-p-Zen CJK">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号は自動生成で縦中横、番号の前後の括弧は欧文括弧で手打ち</h4>
+
+        <p>番号は自動生成して縦中横。前後の括弧は手打ち。。<code>text-combine-upright</code>プロパティの<code>digits</code>値がサポートされれば括弧も含めて自動生成できるはず。
+        </p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block manual-TCU">
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>（ああ）ああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 9;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 98;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block manual-TCU">
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>（ああ）ああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 9;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 98;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h4>番号は自動生成で縦中横、番号の前後の括弧は和文括弧で手打ち</h4>
+
+        <p>番号は自動生成して縦中横。前後の括弧は手打ち。<code>text-combine-upright</code>プロパティの<code>digits</code>値がサポートされれば括弧も含めて自動生成できるはず。
+        </p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="inline-block manual-TCU">
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>（ああ）ああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 9;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 98;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="inline-block manual-TCU">
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>（ああ）ああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 9;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 98;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <h2>番号を<code>float</code>で配置</h2>
+
+    <section>
+        <h3><code>float</code>と約物</h3>
+        <p><code>float</code>で追い出された本文の先頭の約物は詰められるか？<code>ul</code>などのリスト要素を使わずに実装。"「あああ。」"部分が<code>float</code>。</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <div class="simple-float">
+                    <div class="item">
+                        <div class="label">「あああ。」</div>
+                        <div>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">「あああ。」</div>
+                        <div>ああああああああああああああああああああ。ああああああああああああああああああああ。</div>
+                    </div>
+                </div>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <div class="simple-float">
+                    <div class="item">
+                        <div class="label">「あああ。」</div>
+                        <div>「ああああああああああああああああああああ。ああああああああああああああああああああ。」</div>
+                    </div>
+                    <div class="item">
+                        <div class="label">「あああ。」</div>
+                        <div>ああああああああああああああああああああ。ああああああああああああああああああああ。</div>
+                    </div>
+                </div>
+            </div>
+        </figure>
+
+    </section>
+    <section>
+        <h3>番号を左揃え、番号の括弧は欧文括弧/和文括弧、本体の括弧は和文括弧</h3>
+
+        <p>番号が左揃え、番号の桁数が増えると本体に入り込む。書籍や学術雑誌で見かける。既定のリスト<code>ol</code>に大幅に手を加えて作成。</p>
+        <p>番号の"）"と本体の"「"とは隣り合ってるのか？</p>
+
+        <p>番号の括弧は欧文括弧</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float counter-n-Han-p-Han">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float counter-n-Han-p-Han TCU">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 8;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 98;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <p>3桁の縦中横<code>text-combine-upright: 3;</code>は効かない。</p>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float counter-n-Han-p-Han TCU">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 8;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 98;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float counter-n-Han-p-Zen TCU">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 8;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 98;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float counter-n-Han-p-Zen TCU">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 8;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 98;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <p>番号の括弧は和文括弧</p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float counter-n-Han-p-Zen">
+                    <li>ああああ</li>
+                    <li>「ああ。」</li>
+                    <li>（ああ）ああ</li>
+                    <li style="counter-set: custom-counter 9;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li style="counter-set: custom-counter 9998;">ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                    <li>ああああああああああああああああああああああああ</li>
+                    <li>「ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+    </section>
+
+    <section>
+        <h4>番号は自動生成で縦中横、番号の前後の括弧は欧文括弧で手打ち</h4>
+
+        <p>番号は自動生成して縦中横。前後の括弧は手打ち。<code>text-combine-upright</code>プロパティの<code>digits</code>値がサポートされれば括弧も含めて自動生成できるはず。
+        </p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float manual-TCU">
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>（ああ）ああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 9;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 98;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float manual-TCU">
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>（ああ）ああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 9;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"
+                                style="counter-set: custom-counter 98;"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">(<span class="number"></span>)</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <section>
+        <h4>番号は自動生成で縦中横、番号の前後の括弧は和文括弧で手打ち</h4>
+
+        <p>番号は自動生成して縦中横。前後の括弧は手打ち。<code>text-combine-upright</code>プロパティの<code>digits</code>値がサポートされれば括弧も含めて自動生成できるはず。
+        </p>
+
+        <figure>
+            <figcaption>横組み</figcaption>
+            <div class="sample">
+                <ol class="float manual-TCU">
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>（ああ）ああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 9;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 98;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+        <figure>
+            <figcaption>縦組み</figcaption>
+            <div class="sample vertical">
+                <ol class="float manual-TCU">
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>「ああああああああああああああああああああ。」</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>（ああ）ああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 9;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"
+                                style="counter-set: custom-counter 98;"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                    <li><span class="marker">（<span class="number"></span>）</span>ああああああああああああああああああああああああ</li>
+                </ol>
+            </div>
+        </figure>
+
+    </section>
+
+    <p style="text-align: end;">以上</p>
+</body>
+
+</html>
