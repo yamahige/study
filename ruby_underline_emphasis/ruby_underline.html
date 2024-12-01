@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ルビと下線と圏点の調整</title>
+    <style>
+        :root {
+            text-autospace: auto;
+            writing-mode: vertical-rl;
+        }
+        em {
+            font-style: normal;
+        }
+        .underline em {
+            text-decoration: underline;
+            /*
+            text-underline-offset: 4px;
+            */
+        }
+        .emphasis em {
+            text-emphasis-style: filled sesame;
+            text-emphasis-position: over right;
+        }
+        ruby rt {
+            /*
+            z-index: 1;
+            */
+            position: relative;
+            inset-block-start: 0;
+            background-color: white;
+        }
+        div.sample {
+            /*
+            writing-mode: vertical-rl;
+            */
+            line-height: 2.5em;
+            max-inline-size: 25em;
+            padding-block: .5em;
+            padding-inline-end: .5em;
+            outline: thin solid green;
+        }
+        div.sample {
+            writing-mode: vertical-rl;
+            margin-block: 1em;
+            margin-inline: 0;
+        }
+        div.sample.horizontal {
+            writing-mode: horizontal-tb;
+            margin-block: 0;
+            margin-inline: 1em;
+        }
+        select, input {
+            margin-block: .5em;
+            font-size: 1em;
+            margin-inline: .5em;
+        }
+        input {
+            inline-size: 4em;
+        }
+        code {
+            font-size: 1em;
+            background-color: lightgrey;
+        }
+    </style>
+</head>
+
+<body>
+<h1>ルビと下線と圏点の調整</h1>
+
+<p>v1: 2024-12-01</p>
+
+<p>ルビと下線と、加えて圏点との位置などを満足できるように調整できるかの確認。今のCSSでどこまでコントロールできるかを確認する。</p>
+
+<h2>調整</h2>
+
+<p>選択肢を選んだり数値を変えて、ルビと下線と圏点の位置などを調整する。</p>
+
+<div>
+    <form>
+        <div>
+            <label>下線の位置: <select id="text-underline-position">
+                <option value="auto" selected>ブラウザーのアルゴリズムによる（auto）</option>
+                <option value="right">右（right）</option>
+                <option value="left">左（left）</option>
+            </select>（CSSのtext-underline-positionプロパティ）</label>
+        </div>
+        <div>
+            <label>下線の既定の位置からのオフセット: <input type="number" size="2"
+                value="4" id="text-underline-offset">ピクセル（text-underline-offset）</label>
+        </div>
+        <div>
+            <label>ルビテキストの既定の位置からのオフセット: <input type="number" size="2"
+                value="4" id="inset-block-start">ピクセル（rtのpositionがrelativeに設定してあり、inset-block-startで調整。増やすと本体に近づき、減らすと本体から遠ざかる。）</label>
+        </div>
+        <div>
+            <label>ルビの背景色: <select id="background-color">
+                <option value="white" selected>白（white）</option>
+                <option value="transparent">透明（transparent）</option>
+            </select>（background-color）</label>
+        </div>
+        <div>
+            <label>行間: <input type="number" step="0.1" placeholder="1.8" size="2"
+                value="1.8" id="line-height">em（line-height、行ボックスの高さ）</label>
+        </div>
+    </form>
+</div>
+
+<h2>下線</h2>
+
+<div class="sample underline">
+    <p>あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>強調が<rp>(</rp><rt>きょうちょうが</rt><rp>)</rp>広い<rp>(</rp><rt>ひろい</rt><rp>)</rp></ruby>ああああああ</em>ああああ。あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>離れたルビ<rp>(</rp><rt>はなれたるび</rt><rp>)</rp></ruby>を囲む一つの<ruby>強調<rp>(</rp><rt>きょうちょう</rt><rp>)</rp></ruby>ああああああ</em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<em><ruby>強調と<rp>(</rp><rt>きょうちょうと</rt><rp>)</rp>ルビ<rp>(</rp><rt>るび</rt><rp>)</rp></ruby></em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<ruby>ルビOnly<rp>(</rp><rt>るびのみ</rt><rp>)</rp></ruby><em><ruby>強調とルビ<rp>(</rp><rt>きょうちょうとるび</rt><rp>)</rp></ruby></em>ああああ</p>
+</div>
+
+<div class="sample underline horizontal">
+    <p>あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>強調が<rp>(</rp><rt>きょうちょうが</rt><rp>)</rp>広い<rp>(</rp><rt>ひろい</rt><rp>)</rp></ruby>ああああああ</em>ああああ。あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>離れたルビ<rp>(</rp><rt>はなれたるび</rt><rp>)</rp></ruby>を囲む一つの<ruby>強調<rp>(</rp><rt>きょうちょう</rt><rp>)</rp></ruby>ああああああ</em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<em><ruby>強調と<rp>(</rp><rt>きょうちょうと</rt><rp>)</rp>ルビ<rp>(</rp><rt>るび</rt><rp>)</rp></ruby></em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<ruby>ルビOnly<rp>(</rp><rt>るびのみ</rt><rp>)</rp></ruby><em><ruby>強調とルビ<rp>(</rp><rt>きょうちょうとるび</rt><rp>)</rp></ruby></em>ああああ</p>
+</div>
+
+<h2>圏点</h2>
+
+<div class="sample emphasis">
+    <p>あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>強調が<rp>(</rp><rt>きょうちょうが</rt><rp>)</rp>広い<rp>(</rp><rt>ひろい</rt><rp>)</rp></ruby>ああああああ</em>ああああ。あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>離れたルビ<rp>(</rp><rt>はなれたるび</rt><rp>)</rp></ruby>を囲む一つの<ruby>強調<rp>(</rp><rt>きょうちょう</rt><rp>)</rp></ruby>ああああああ</em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<em><ruby>強調と<rp>(</rp><rt>きょうちょうと</rt><rp>)</rp>ルビ<rp>(</rp><rt>るび</rt><rp>)</rp></ruby></em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<ruby>ルビOnly<rp>(</rp><rt>るびのみ</rt><rp>)</rp></ruby><em><ruby>強調とルビ<rp>(</rp><rt>きょうちょうとるび</rt><rp>)</rp></ruby></em>ああああ</p>
+</div>
+
+<div class="sample emphasis horizontal">
+    <p>あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>強調が<rp>(</rp><rt>きょうちょうが</rt><rp>)</rp>広い<rp>(</rp><rt>ひろい</rt><rp>)</rp></ruby>ああああああ</em>ああああ。あああああああ<em>強調のみ</em>ああああああああ。ああああああああああ。<em>ああああ<ruby>離れたルビ<rp>(</rp><rt>はなれたるび</rt><rp>)</rp></ruby>を囲む一つの<ruby>強調<rp>(</rp><rt>きょうちょう</rt><rp>)</rp></ruby>ああああああ</em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<em><ruby>強調と<rp>(</rp><rt>きょうちょうと</rt><rp>)</rp>ルビ<rp>(</rp><rt>るび</rt><rp>)</rp></ruby></em>ああああ</p>
+    <p>あああああああああああああああああああああ。ああああああああああ。<ruby>ルビOnly<rp>(</rp><rt>るびのみ</rt><rp>)</rp></ruby><em><ruby>強調とルビ<rp>(</rp><rt>きょうちょうとるび</rt><rp>)</rp></ruby></em>ああああ</p>
+</div>
+
+<p style="text-align: start;">以上</p>
+
+<script>
+window.addEventListener("DOMContentLoaded", function(){
+    const ems = document.querySelectorAll('em');
+    const rts = document.querySelectorAll('ruby rt');
+    samples = document.querySelectorAll('.sample');
+
+    {
+        const select = document.getElementById('text-underline-position');
+        const compStyles = window.getComputedStyle(ems[0]);
+        const value = compStyles.getPropertyValue("text-underline-position");
+        select.addEventListener('change', (e) =>{
+                ems.forEach(em => em.style.textUnderlinePosition = `${e.target.value}`);
+            } , false);
+    }
+    {
+        const input = document.getElementById('text-underline-offset');
+        const compStyles = window.getComputedStyle(ems[0]);
+        const value = compStyles.getPropertyValue("text-underline-offset");
+        try {
+            input.value = parseInt(value);
+            if (input.value === "") {
+                console.log(`text-underline-offset: ${value}`);
+                input.value = 0;
+            }
+        } catch(e) {
+            console.log(`${e}, text-underline-offset: ${value}`);
+            input.value = 0;
+        }
+        input.addEventListener('change', (e) =>{
+                ems.forEach(em => em.style.textUnderlineOffset = `${e.target.value}px`);
+            } , false);
+    }
+    {
+        const input = document.getElementById('inset-block-start');
+        const compStyles = window.getComputedStyle(rts[0]);
+        const value = compStyles.getPropertyValue("inset-block-start");
+        try {
+            input.value = parseInt(value);
+            if (input.value === "") {
+                console.log(`inset-block-start: ${value}`);
+                input.value = 0;
+            }
+        } catch(e) {
+            console.log(`${e}, inset-block-start: ${value}`);
+            input.value = 0;
+        }
+        input.addEventListener('change', (e) =>{
+                rts.forEach(rt => rt.style.insetBlockStart = `${e.target.value}px`);
+            } , false)
+    }
+    {
+        const select = document.getElementById('background-color');
+        const compStyles = window.getComputedStyle(ems[0]);
+        const value = compStyles.getPropertyValue("background-color");
+        select.addEventListener('change', (e) =>{
+                rts.forEach(rt => rt.style.backgroundColor = `${e.target.value}`);
+            } , false);
+    }
+    {
+        const input = document.getElementById('line-height');
+        const compStyles = window.getComputedStyle(samples[0]);
+        const fontSizeValue = compStyles.getPropertyValue("font-size");
+        const lineHeightValue = compStyles.getPropertyValue("line-height");
+        try {
+            const fontSize = parseInt(fontSizeValue);
+            const lineHeight = parseInt(lineHeightValue);
+            input.value = (lineHeight / fontSize).toFixed(1);
+        } catch(e) {
+            console.log(`${e}, line-height: ${lineHeightValue}, font-size: ${lineHeightValue}`);
+            input.value = 2.5;
+        }
+        input.addEventListener('change', (e) =>{
+                samples.forEach(sample => sample.style.lineHeight = `${e.target.value}em`);
+            } , false)
+    }
+});
+</script>
+
+</body>
+
+</html>
