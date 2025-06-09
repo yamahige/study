@@ -14,10 +14,13 @@
     </head>
 <body>
     <h1>論文ThemeのHTMLファイルをJATSに変換</h1>
-    <p>Google code prettifierでハイライト</p>
+    <p>「<a href="https://gihyo.jp/article/2025/02/vivliostyle-05">VFMで学会論文を書いてVivliostyleで組んで投稿する</a>」の
+        サンプルCSSのHTMLを読み込んで<a href="https://xspa.jp/what/">JATS (Journal Article Tag Suite)</a>のXMLに変換します。
+    このHTMLは、Vivliostyleが入力されたVFMを組版するときに途中で生成するもので、".vs-◯◯.html"といった名前の隠しファイルです。</p>
+        <p style="text-align: end;">2025-06-09</p>
     <div class="input-container">
-        <input type="url" id="urlInput" placeholder="Enter URL to fetch HTML content">
-        <button id="fetchButton">Fetch HTML</button>
+        <input type="url" id="urlInput" placeholder="Enter URL to fetch HTML content" value="./example/sample.html">
+        <button id="fetchButton">読み込んで変換</button>
     </div>
     <script type="module">
         import { ConvertToJATS } from './jats-converter.js'; // Import the ConvertToJATS function
@@ -49,7 +52,7 @@
         });
     </script>
     <input type="file" id="fileInput" accept=".html">
-    <button id="loadFileButton">Convert File</button>
+    <button id="loadFileButton">読み込んで変換</button>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xml-formatter@3.6.6/dist/browser/xml-formatter-singleton.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autorun=false"></script>
     <script type="module">
