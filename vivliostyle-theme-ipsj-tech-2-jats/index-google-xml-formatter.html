@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Article Theme HTML to JATS Converter</title>
+        <link rel="stylesheet" href="./index.css" type="text/css" />
+        <script type="module" src="./jats-converter.js"></script>
+        <script>
+            // This script is for converting HTML content to JATS format.
+            // import { JATSConverter } from './jats-converter.js'; // Assuming you have a JATSConverter module
+            // You can initialize the JATSConverter here if needed
+        </script>
+    </head>
+<body>
+    <h1>論文ThemeのHTMLファイルをJATSに変換</h1>
+    <p>Google code prettifierでハイライト</p>
+    <div class="input-container">
+        <input type="url" id="urlInput" placeholder="Enter URL to fetch HTML content">
+        <button id="fetchButton">Fetch HTML</button>
+    </div>
+    <script type="module">
+        import { ConvertToJATS } from './jats-converter.js'; // Import the ConvertToJATS function
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const url = document.getElementById('urlInput').value;
+            if (url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(htmlContent => {
+                        const bodyContent = ConvertToJATS(htmlContent);
+                        document.getElementById('fileContent').innerText = xmlFormatter(bodyContent, {
+                            collapseContent: true
+                        });
+                        document.getElementById('inputHtml').innerText = htmlContent;
+                        PR.prettyPrint();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert('Failed to fetch HTML content. Please check the URL and try again.');
+                    });
+            } else {
+                alert('Please enter a valid URL.');
+            }
+        });
+    </script>
+    <input type="file" id="fileInput" accept=".html">
+    <button id="loadFileButton">Convert File</button>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xml-formatter@3.6.6/dist/browser/xml-formatter-singleton.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autorun=false"></script>
+    <script type="module">
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const content = document.getElementById('fileContent').innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Content copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+    </script>
+    <div class="container">
+        <div class="content">
+            <h2>Source HTML Content</h2>
+            <pre><code id="inputHtml" class="source prettyprint lang-html linenums"></code></pre>
+        </div>
+        <div class="content">
+            <h2>Converted JATS Content, xml-formatterで整形 <button id="copyButton">Copy to Clipboard</button></h2>
+            <pre><code id="fileContent" class="source prettyprint lang-xml linenums"></code></pre>
+        </div>
+    </div>
+    <script type="module">
+        import { ConvertToJATS } from './jats-converter.js'; // Import the ConvertToJATS function
+        document.getElementById('loadFileButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const content = event.target.result;
+                    const bodyContent = ConvertToJATS(content);
+                    document.getElementById('fileContent').innerText = xmlFormatter(bodyContent,
+                        {
+                            collapseContent: true
+                        }
+                    );
+                    document.getElementById('inputHtml').innerText = content;
+                    PR.prettyPrint()
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please select a file to load.');
+            }
+        });
+    </script>
+    <p>Thank you for visiting!</p>
+</html>

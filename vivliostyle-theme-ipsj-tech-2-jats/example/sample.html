@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Vivliostyleで学会論文を投稿する</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./table.css">
+    <link rel="stylesheet" href="./screen.css" media="screen">
+    <link rel="stylesheet" href="./print.css" media="print">
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  </head>
+  <body>
+    <header><!-- sectionを作らせない -->
+      <h1 id="vivliostyleで学会論文を投稿する">Vivliostyleで学会論文を投稿する</h1>
+      <section class="level2" aria-labelledby="著者">
+        <h2 class="author" id="著者">著者</h2>
+        <p>著者 1<a href="#affi1" class="affiref"></a><a href="#email-1" class="emailref"></a></p>
+        <p>著者 2<a href="#affi2" class="affiref"></a><a href="#email-2" class="emailref"></a></p>
+        <p>著者 3<a href="#affi1" class="affiref"></a><a href="#paffi3" class="paffiref"></a><a href="#email-3" class="emailref"></a></p>
+      </section>
+      <section class="level2" aria-labelledby="概要">
+        <h2 class="abstract" id="概要">概要:</h2>
+        <p>
+          Vivliostyleで学会論文を投稿するための、CSSの設定やVFMでの書き方を解説します。
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+        </p>
+        <p>
+          概要の2番目の段落。
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+        </p>
+      </section>
+      <section class="level2" aria-labelledby="キーワード">
+        <h2 class="keyword" id="キーワード">キーワード</h2>
+        <p>Vivliostyle, 論文, VFM, Vivliostyle Flavored Markdown, Markdown, CSS, Cascading Style Sheets</p>
+      </section>
+      <h2 class="title" lang="en" id="submitting-an-academic-article-by-vivliostyle">Submitting an Academic Article by Vivliostyle</h2>
+      <section class="level2" aria-labelledby="author">
+        <h2 class="author" lang="en" id="author">Author</h2><!-- 小文字を使っても小さな大文字(small-caps)になります -->
+        <p>Author's name in small caps<a href="#affi1" class="affiref"></a><a href="#email-1" class="emailref"></a></p>
+        <p>Author 2<a href="#affi2" class="affiref"></a><a href="#email-2" class="emailref"></a></p>
+        <p>Author 3<a href="#affi1" class="affiref"></a><a href="#paffi3" class="paffiref"></a><a href="#email-3" class="emailref"></a></p>
+      </section>
+      <section class="level2" aria-labelledby="abstract">
+        <h2 class="abstract" lang="en" id="abstract">Abstract:</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p lang="en">The 2nd paragraph of the abstract. Hyphenation is invoked by the <code>lang</code> attribute. abstract abstract abstract abstract internationalization abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract abstract.</p>
+      </section>
+      <section class="level2" aria-labelledby="keywords">
+        <h2 class="keyword" lang="en" id="keywords">Keywords:</h2>
+        <p>Vivliostyle, scholarly article, VFM, Vivliostyle Flavored Markdown, Markdown, CSS, Cascading Style Sheets</p>
+      </section>
+    </header>
+    <section class="level2" aria-labelledby="所属">
+      <h2 class="affiliate-heading" id="所属">所属</h2>
+      <p class="affiliate" id="affi1">所属は左段の下詰めに配置。番号を自動生成。生成した番号を著者の右肩で参照。<br>Affiliate 1</p>
+      <p class="affiliate" id="affi2">所属2 所属2 所属2 所属2 所属2 所属2 所属2 所属2 所属2<br>Affiliate 2, affiliate 2, affiliate 2, affiliate 2, affiliate 2, affiliate 2, affiliate 2</p>
+      <p class="paffiliate" id="paffi3"><span lang="ja">前の所属も左段の下詰めに配置。現所属とは別の番号を自動生成。生成した番号を著者の右肩で参照。</span><span lang="en">Affiliate 3</span></p>
+    </section>
+    <section class="level2" aria-labelledby="email">
+      <h2 class="email-heading" id="email">Email</h2>
+      <p class="email" id="email-1">address-1@example.com</p>
+      <p class="email" id="email-2">address-2@example.com</p>
+      <p class="email" id="email-3">address-3@example.com</p>
+    </section>
+    <section class="level2" aria-labelledby="はじめに">
+      <h2 id="はじめに">はじめに</h2>
+      <p>テキストの量を「色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。」で調整しています。</p>
+    </section>
+    <section class="level2" aria-labelledby="sec-01">
+      <h2 id="sec-01">段組み</h2>
+      <p>
+        段組みできます！
+        本文は2段組、タイトルなどは段抜き。
+        段組みで本文は左段から順に埋まります。
+      </p>
+    </section>
+    <section class="level2" aria-labelledby="見出し">
+      <h2 id="見出し">見出し</h2>
+      <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <p>「色は匂へど散りぬるを我が世誰ぞ常ならむ」、「（約物）」「有為の奥山今日越えて浅き夢見し酔ひもせず。」</p>
+      <section class="level3" aria-labelledby="sec-01-01">
+        <h3 id="sec-01-01">下のレベルの見出し</h3>
+        <p>「The色は匂へど散りぬるをHTTP我が世誰ぞ常ならむ、internationalization有為のaccessibility奥山（今日越えて）浅き888夢見し酔ひもせず。」</p>
+        <section class="level4" aria-labelledby="下の下のレベルの見出し">
+          <h4 id="下の下のレベルの見出し">下の下のレベルの見出し</h4>
+          <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+          <section class="level5" aria-labelledby="run-inの見出し">
+            <h5 id="run-inの見出し">Run-inの見出し</h5>
+            <p>このサンプルでは<code>h5</code>要素の見出し(Markdownで<code>#####</code>で始まる行)をrun-inに設定している。</p>
+            <p>2つ目の段落。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+          </section>
+        </section>
+      </section>
+      <section class="level3" aria-labelledby="段組みで本文を順に埋める">
+        <h3 id="段組みで本文を順に埋める">段組みで本文を順に埋める</h3>
+        <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      </section>
+    </section>
+    <section class="level2" aria-labelledby="sec-02">
+      <h2 id="sec-02">図表</h2>
+      <p>
+        図表は上詰めになってる。ページ上の順番を左上から右下に見るとすると、図表および本文の順番は、ページ上ではソース上とは異なる場合がある。
+        段内の図表と段抜きの図表の前後関係も、ソース上の順番とは異なる場合がある。
+        これがおかしいと感じる場合は、ソース上の順番を変えてみる。
+      </p>
+      <section class="level3" aria-labelledby="表">
+        <h3 id="表">表</h3>
+        <p><a href="#table-01" class="tabref"></a>、<a href="#table-02" class="tabref"></a>、<a href="#table-03" class="tabref"></a>がどこかにあるはず。</p>
+        <figure class="table" id="table-01">
+          <figcaption>
+            <div lang="ja">Markdownの表。figure要素にidが付いている。Markdownで表を描く場合はtable要素にidを付けられない。キャプションの中で文献を参照できる<a class="cite" href="#ref-06"></a>。</div>
+            <div lang="en">Markdown table, caption caption caption caption caption</div>
+          </figcaption>
+          <table>
+            <thead>
+              <tr>
+                <th align="left">ラベル</th>
+                <th align="left">ラベル</th>
+                <th align="right">ラベル</th>
+                <th align="right">ラベル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+        <figure class="table">
+          <figcaption>
+            <div lang="ja">HTMLの表、table要素にidが付いている。キャプションの中で文献を参照できる<a class="cite" href="#ref-06"></a>。</div>
+            <div lang="en">HTML table, caption caption caption caption caption</div>
+          </figcaption>
+          <table id="table-02" class="col-align-llrr">
+            <thead>
+              <tr>
+                <td></td>
+                <th>ラベル</th>
+                <th>ラベル</th>
+                <th>ラベル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>2</td>
+                <td>10,000</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>3</td>
+                <td>1,000</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>4</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>10</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>100</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>1000</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>セル</td>
+                <td>10,000</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+        <figure class="table">
+          <figcaption><span lang="ja"><a class="tabref" href="#table-02"></a>とは異なる揃えの表。キャプション キャプション キャプション キャプション(idはtable-03)</span><span lang="en">Caption caption caption caption.</span></figcaption>
+          <table id="table-03" class="col-align-lrlr">
+            <thead>
+              <tr>
+                <td></td>
+                <th>ラベル</th>
+                <th>ラベル</th>
+                <th>ラベル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>セル</th>
+                <td>2</td>
+                <td>セル</td>
+                <td>10,000</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>3</td>
+                <td>セル</td>
+                <td>1,000</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>4</td>
+                <td>セル</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>10</td>
+                <td>セル</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>100</td>
+                <td>セル</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>1,000</td>
+                <td>セル</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <th>セル</th>
+                <td>10,000</td>
+                <td>セル</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+      </section>
+      <section class="level3" aria-labelledby="図">
+        <h3 id="図">図</h3>
+        <p><a href="#fig-01" class="figref"></a>、<a href="#fig-02" class="figref"></a>、<a href="#fig-03" class="figref"></a>、<a href="#fig-04" class="figref"></a>がどこかにあるはず。</p>
+        <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+        <figure class="fig" id="fig-01">
+          <img src="process-v2.svg">
+          <figcaption>
+            <div>HTMLで挿入した図。図番号を自動生成。日英2つのキャプションを付けて、それぞれのプレフィックスで図番号を付けられる。キャプションの中で文献を参照できる<a class="cite" href="#ref-06"></a></div>
+            <div lang="en">Graphic inserted as HTML format.</div>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="process-md-v2.svg" alt="Markdownで挿入した図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。" class="fig" id="fig-02">
+          <figcaption aria-hidden="true">Markdownで挿入した図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。</figcaption>
+        </figure>
+        <figure class="fig col-span-2" id="fig-03">
+          <img src="flow.svg">
+          <figcaption>
+            <div>2段にまたがる図。上詰め。キャプションの中で文献を参照できる<a class="cite" href="#ref-06"></a>。</div>
+            <div lang="en">Wide firgure spanning two columns.</div>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="flow-md.svg" alt="Markdownで挿入した2段にまたがる図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。figure要素で囲まれるが、クラスはimg要素に設定されるので、段抜きの設定をCSS側で工夫する。キャプションの中で文献を参照できない。" class="fig col-span-2" id="fig-04">
+          <figcaption aria-hidden="true">Markdownで挿入した2段にまたがる図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。figure要素で囲まれるが、クラスはimg要素に設定されるので、段抜きの設定をCSS側で工夫する。キャプションの中で文献を参照できない。</figcaption>
+        </figure>
+      </section>
+      <section class="level3" aria-labelledby="2つの画像からなる図">
+        <h3 id="2つの画像からなる図">2つの画像からなる図</h3>
+        <p>2つの画像で1つの図を構成しています。上詰めを止めてあります。</p>
+        <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+        <figure class="fig normal-flow" id="fig-two-img">
+          <p>
+            <img src="circle.svg" alt="小さな図#2" style="width: 40%;">
+            <img src="square.svg" alt="小さな図#3" style="width: 40%; margin-inline-start: 1rem;">
+          </p>
+          <figcaption>
+            <div>2つの画像からなる図</div>
+            <div lang="en">Figure consists of two images.</div>
+          </figcaption>
+        </figure>
+      </section>
+      <section class="level3" aria-labelledby="図を横に並べる">
+        <h3 id="図を横に並べる">図を横に並べる</h3>
+        <p>図と表を横に並べています。上詰めを止めてあります。</p>
+        <p>
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+          色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。
+        </p>
+        <div class="minipage normal-flow">
+          <figure>
+            <img src="circle.svg" alt="小さな図#1" class="fig" id="fig-small" style="width: 80%;">
+            <figcaption aria-hidden="true">小さな図#1</figcaption>
+          </figure>
+          <figure class="table" id="table-small">
+            <figcaption>
+              <div>小さな表</div>
+              <div lang="en">Small table</div>
+            </figcaption>
+            <table>
+              <thead>
+                <tr>
+                  <th align="left">品目</th>
+                  <th align="right">数量</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left">パイナップル</td>
+                  <td align="right">300</td>
+                </tr>
+                <tr>
+                  <td align="left">ぶどう</td>
+                  <td align="right">4</td>
+                </tr>
+              </tbody>
+            </table>
+          </figure>
+        </div>
+      </section>
+    </section>
+    <section class="level2" aria-labelledby="数式">
+      <h2 id="数式">数式</h2>
+      <section class="level3" aria-labelledby="番号を付けない数式">
+        <h3 id="番号を付けない数式">番号を付けない数式</h3>
+        <p>数式番号を付けないならMarkdownだけで数式を書ける。</p>
+        <p>インラインの数式は、例えばこうなります: <span class="math inline" data-math-typeset="true">\(E=mc^2\)</span></p>
+        <p>別行立て数式(別行数式、ディスプレイ数式)はこうなります:</p>
+        <p><span class="math display" data-math-typeset="true">$${\displaystyle G_{\mu \nu }+\Lambda g_{\mu \nu }=\kappa T_{\mu \nu }}$$</span></p>
+      </section>
+      <section class="level3" aria-labelledby="番号を付ける数式">
+        <h3 id="番号を付ける数式">番号を付ける数式</h3>
+        <p>番号を付ける数式はHTML形式で、数式番号と紐づけた<code>div</code>要素で囲む:</p>
+        <div class="equation number" id="eq-01">
+          <p><span class="math display" data-math-typeset="true">$${\displaystyle G_{\mu \nu }+\Lambda g_{\mu \nu }=\kappa T_{\mu \nu }}$$</span></p>
+        </div><!-- div要素と数式の間に1行開けない場合、data-math-typeset="true"のspan要素が必要 -->
+        <div class="equation number" id="eq-02"><span data-math-typeset="true">$${\displaystyle \kappa ={\frac {8\pi G}{c^{4}}}}$$</span></div>
+      </section>
+    </section>
+    <section class="level2" aria-labelledby="章図表参考文献数式の参照">
+      <h2 id="章図表参考文献数式の参照">章、図表、参考文献、数式の参照</h2>
+      <section class="level3" aria-labelledby="章節番号の参照">
+        <h3 id="章節番号の参照">章・節番号の参照</h3>
+        <p><a href="#sec-01" class="secref"></a>の見出しは「段組み」、<a href="#sec-01-01" class="subsecref"></a>の見出しは「下のレベルの見出し」。</p>
+      </section>
+      <section class="level3" aria-labelledby="参考文献の参照">
+        <h3 id="参考文献の参照">参考文献の参照</h3>
+        <p>詳細はVivliostyleのホームページを参照<a href="#ref-01" class="cite"></a>、詳しい本も出版されてます<a href="#ref-02" class="cite"></a>。解説記事も連載中！<a href="#ref-03" class="cite"></a>。連続する参照をまとめて[4-6]とする機能はありません<a href="#ref-04" class="cite"></a><a href="#ref-05" class="cite"></a><a href="#ref-06" class="cite"></a>。</p>
+      </section>
+      <section class="level3" aria-labelledby="図表の参照">
+        <h3 id="図表の参照">図表の参照</h3>
+        <p>特定の参照、例えば本文中で最初の参照を赤い色にするといった場合は、それに対応したクラスを設定する。ここでは、<code>first-ref</code>クラスを手動で設定している。</p>
+        <p><a href="#fig-01" class="figref first-ref"></a>は、色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。<a href="#fig-02" class="figref first-ref"></a>は、いろはにほへと、ちりぬるを、わかよたれそつねならむ、けふのおくやま(<a href="#fig-03" class="figref first-ref"></a>、<a href="#fig-04" class="figref first-ref"></a>)。<a href="#fig-01" class="figref"></a>の2回目の参照。</p>
+        <p><a href="#table-01" class="tabref first-ref"></a>はMarkdownの表。<a href="#table-02" class="tabref first-ref"></a>はHTMLの表。<a href="#table-03" class="tabref first-ref"></a>はMarkdownの表。<a href="#table-01" class="tabref"></a>の2回目の参照。</p>
+      </section>
+      <section class="level3" aria-labelledby="数式の参照">
+        <h3 id="数式の参照">数式の参照</h3>
+        <p>数式<a href="#eq-01" class="eqref"></a>はアインシュタイン方程式、<a href="#eq-02" class="eqref"></a>はアインシュタインの重力定数<span class="math inline" data-math-typeset="true">\(\kappa\)</span>とニュートンの重力定数<span class="math inline" data-math-typeset="true">\(G\)</span>との関係。、色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      </section>
+    </section>
+    <section class="level2" aria-labelledby="脚注">
+      <h2 id="脚注">脚注</h2>
+      <p>Vivliostyle<a href="#fn-01" class="fn-call"></a>、HTML<a href="#fn-02" class="fn-call"></a>、CSS<a href="#fn-03" class="fn-call"></a>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <section class="fn-area">
+        <p><span class="fn-text" id="fn-01"><a class="url" href="https://vivliostyle.org/">https://vivliostyle.org/</a></span></p>
+        <p><span class="fn-text" id="fn-02"><a href="https://developer.mozilla.org/ja/" class="url">Mozilla</a>。ここで文献参照もできます<a href="#ref-01" class="cite"></a>。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</span></p>
+        <p><span class="fn-text" id="fn-03"><a href="https://developer.mozilla.org/ja/" class="url">https://developer.mozilla.org/ja/</a></span></p>
+      </section>
+      <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <p>本文<a href="#fn-04" class="fn-call"></a>、本文<a href="#fn-05" class="fn-call"></a>、本文<a href="#fn-06" class="fn-call"></a>。2つ目の脚注エリアに脚注本体を表示する。</p>
+      <section class="fn-area">
+        <span class="fn-text" id="fn-04">2つ目の脚注エリア。4つ目の脚注。</span>
+        <span class="fn-text" id="fn-05">5つ目の脚注</span>
+        <span class="fn-text" id="fn-06">6つ目の脚注</span>
+      </section>
+    </section>
+    <section class="level2" aria-labelledby="箇条書き">
+      <h2 id="箇条書き">箇条書き</h2>
+      <p>番号なしの箇条書き。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <ul>
+        <li>あああ</li>
+        <li>（あああ）あああ（あああ）。「（ああああああああああ）。」</li>
+        <li>「あああ」あああ（あああ）。「ああああああああああ。ああああああああああ。」「ああああああああああ。」「ああああああああああ。ああああああああああ。ああああああああああ。」</li>
+      </ul>
+      <p>番号付き（順序付き）の箇条書き。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+      <ol>
+        <li>番号に全角の括弧</li>
+        <li>「あああ」あああ（あああ）。ああああああああああ。</li>
+        <li>（あああ）あああ（あああ）。「（ああああああああああ）。」</li>
+        <li>あああ</li>
+        <li>「あああ」あああ（あああ）。「ああああああああああ。ああああああああああ。」「ああああああああああ。」「ああああああああああ。」</li>
+        <li>あああ</li>
+        <li>「あああ」あああ（あああ）。ああああああああああ。</li>
+        <li>（あああ）あああ（あああ）。「（ああああああああああ）。」</li>
+        <li>あああ</li>
+        <li>「あああ」あああ（あああ）。ああああああああああ。</li>
+        <li>（あああ）あああ（あああ）。「（ああああああああああ）。」</li>
+        <li>あああ</li>
+      </ol>
+    </section>
+    <section class="level2" aria-labelledby="謝辞">
+      <h2 class="acknowledgement" id="謝辞">謝辞</h2>
+      <p>ありがとう、この論文はMarkdownで書いてVivliostyleで組みました。Vivliostyleコミュニティに感謝 感謝 感謝 感謝 感謝 感謝 感謝 感謝 感謝 感謝 感謝。</p>
+    </section>
+    <section class="level2" aria-labelledby="参考文献">
+      <h2 class="reference" id="参考文献">参考文献</h2>
+      <div class="reference" id="ref-01">Vivliostyle Foundation：Vivliostyle Viewer<br><a class="url" href="https://docs.vivliostyle.org/#/vivliostyle-viewer">https://docs.vivliostyle.org/#/vivliostyle-viewer</a><br>（URLを"⟨"と"⟩"で囲む）</div>
+      <div class="reference" id="ref-02">リブロワークス, <span class="book-title">Vivliostyle：Web技術で「本」が作れるCSS組版Vivliostyle入門</span><br><a class="url" href="https://www.c-r.com/book/detail/1493">https://www.c-r.com/book/detail/1493</a></div>
+      <div class="reference" id="ref-03">村上真雄, 他: Vivliostyleが拓くCSS組版の可能性 記事一覧<br><a class="url" href="https://gihyo.jp/list/group/Vivliostyle%E3%81%8C%E6%8B%93%E3%81%8FCSS%E7%B5%84%E7%89%88%E3%81%AE%E5%8F%AF%E8%83%BD%E6%80%A7">https://gihyo.jp/list/group/Vivliostyleが拓くCSS組版の可能性</a></div>
+      <div class="reference" id="ref-04" lang="en">Author: <span class="book-title">Book Title</span>, Publisher (2024)<br>（英語の文献で書籍の名前をイタリックにする）</div>
+      <div class="reference" id="ref-05">参考文献は、文献の途中で段別れやページ別れしなように`break-inside: avoid;`を設定してある。</div>
+      <div class="reference" id="ref-06">「（参考文献5参考文献参考文献参考文献）。」（参考文献参考文献）。「参考文献参考文献参考文献参考文献参考文献参考文献。」</div>
+      <div class="reference" id="ref-07">参考文献7参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+      <div class="reference" id="ref-08">参考文献8参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+      <div class="reference" id="ref-09">参考文献9参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+      <div class="reference" id="ref-10">参考文献10参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+      <div class="reference" id="ref-11">参考文献11参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+      <div class="reference" id="ref-12">参考文献12参考文献参考文献参考文献。参考文献参考文献。参考文献参考文献参考文献参考文献参考文献参考文献。</div>
+    </section>
+    <section class="level2" aria-labelledby="付録">
+      <h2 class="appendix" id="付録">付録</h2>
+      <p>「付録」という見出しがアウトラインに表示されるように、「付録」を自動生成にはしない。</p>
+      <p>「付録」見出しの<code>h2</code>要素に<code>appendix</code>クラスが設定されていれば、その配下の見出し(<code>h3</code>要素など)や図表の番号の前に"A."が付くようにCSSを設定している。こうすることで、テキストや図表を本文に移動するとき、クラスなどの設定を変える必要はない。</p>
+      <section class="level3" aria-labelledby="長い表">
+        <h3 id="長い表">長い表</h3>
+        <p>長い表がページ分割されたとき、次の段/ページでも見出し行が付く。</p>
+        <figure class="table" id="table-appendix-01" style="float: none; margin-block-start: 1rem;">
+          <figcaption>
+            <div lang="ja">長いMarkdownの表。上詰めはやめてある。</div>
+            <div lang="en">Long markdown table</div>
+          </figcaption>
+          <table>
+            <thead>
+              <tr>
+                <th align="left">ラベル</th>
+                <th align="left">ラベル</th>
+                <th align="right">ラベル</th>
+                <th align="right">ラベル</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1</td>
+                <td align="right">100,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">2</td>
+                <td align="right">10,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">3</td>
+                <td align="right">1,000</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">4</td>
+                <td align="right">100</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10</td>
+                <td align="right">10</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100</td>
+                <td align="right">4</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">1000</td>
+                <td align="right">3</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">10,000</td>
+                <td align="right">2</td>
+              </tr>
+              <tr>
+                <td align="left">セル</td>
+                <td align="left">セル</td>
+                <td align="right">100,000</td>
+                <td align="right">1</td>
+              </tr>
+            </tbody>
+          </table>
+        </figure>
+        <p>個別に上詰めをやめるときは、次のように<code>style</code>属性を設定すればよい。</p>
+        <pre class="language-HTML"><code class="language-HTML">&#x3C;figure class="table"
+  id="table-appendix-01"
+  style="float: none;"></code></pre>
+      </section>
+      <section class="level3" aria-labelledby="の見出し">
+        <h3 id="の見出し"><code>###</code>の見出し</h3>
+        <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+        <section class="level4" aria-labelledby="の見出し-1">
+          <h4 id="の見出し-1"><code>####</code>の見出し</h4>
+          <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+          <section class="level5" aria-labelledby="の見出し-2">
+            <h5 id="の見出し-2"><code>#####</code>の見出し</h5>
+            <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+            <section class="level6" aria-labelledby="の見出し-3">
+              <h6 id="の見出し-3"><code>######</code>の見出し</h6>
+              <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+  </body>
+</html>
