@@ -2,8 +2,6 @@
 図
 *** */
 
-import { MoveChildren } from "./util.js";
-
 let document = null;
 
 export const Figure = (documentParam) => {
@@ -76,7 +74,7 @@ const caption = (figure) => {
                 else if (gchild.nodeType === 1) { // Element node
                     const p = document.createElement('p');
                     caption.append(p);
-                    MoveChildren(document, gchild, p);
+                    p.append(...gchild.childNodes);
                 }
             }
             child.remove();

@@ -3,8 +3,6 @@
 id属性はfigure要素かtable要素のどちらかに設定されている。
 *** */
 
-import { MoveChildren } from "./util.js";
-
 export const TableWrap = (document) => {
     document.querySelectorAll('figure.table').forEach(figTab => {
         const tableWrap = document.createElement('table-wrap');
@@ -17,7 +15,7 @@ export const TableWrap = (document) => {
                 for (const gchild of child.children) {
                     const p = document.createElement('p');
                     caption.append(p);
-                    MoveChildren(document, gchild, p);
+                    p.append(...gchild.childNodes);
                 }
                 child.remove();
             });

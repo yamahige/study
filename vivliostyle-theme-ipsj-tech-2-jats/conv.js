@@ -62,12 +62,6 @@ back
 const back = Back(document);
 
 /* ***
-seciton
-backの後で呼ぶこと。付録がsection要素であることを前提にbackが処理してる
-*** */
-Sec(document);
-
-/* ***
 リスト
 *** */
 List(document);
@@ -102,6 +96,12 @@ Pre(document);
 Code
 *** */
 Code(document);
+
+/* ***
+seciton
+backの後で呼ぶこと。付録がsection要素であることを前提にbackが処理してる
+*** */
+Sec(document);
 
 /* ***
 HTML名前空間からJATS名前空間にノードをコピー

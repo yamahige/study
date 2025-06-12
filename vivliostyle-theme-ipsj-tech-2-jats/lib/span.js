@@ -13,12 +13,32 @@ export const Span = (documentP, element) => {
     italic(element);
     strike(element);
     br(element);
+    namedStyledContent(element);
     // Array.from(element.children)
     //     .filter(child => child.matches('span'))
     //     .forEach(span => {
     //         // console.log(span.textContent);
     //         fontWeight(span);
     //     });
+}
+
+const namedStyledContent = (span) => {
+    Array.from(span.children)
+        .filter(child => child.matches('span'))
+        .forEach(s => {
+            let namedStyledContent;
+            if (s.className) {
+                namedStyledContent = document.createElement('named-content');
+                namedStyledContent.setAttribute('content-type', s.className);
+            } else {
+               namedStyledContent = document.createElement('styled-content');
+            }
+            const style = s.getAttribute('style');
+            if (style) namedStyledContent.setAttribute('style', style);
+            namedStyledContent.append(...s.childNodes);
+            s.after(namedStyledContent);
+            s.remove();
+        })
 }
 
 const bold = (span) => {

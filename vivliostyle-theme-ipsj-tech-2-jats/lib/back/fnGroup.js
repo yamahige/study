@@ -2,8 +2,6 @@
 脚注
 *** */
 
-import { MoveChildren } from "../util.js";
-
 export const FnGroup = (document, back) => {
     const body = document.body;
     const fnGroup = document.createElement('fn-group');
@@ -17,7 +15,7 @@ export const FnGroup = (document, back) => {
         fn.setAttribute('id', fnText.getAttribute('id'));
         const p = document.createElement('p');
         fn.appendChild(p);
-        MoveChildren(document, fnText, p);
+        p.append(...fnText.childNodes);
         fnGroup.appendChild(fn);
         fnText.remove();
     }
