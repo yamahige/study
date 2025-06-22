@@ -12,26 +12,38 @@
                 text-align: start;
                 font-family: "BIZ UDMincho";
             }
-            @page {
-                margin-inline: 25mm;
-                size: A4 portrait;
-                @top-left {
-                    content: string(section-title);
-                    writing-mode: horizontal-tb;
-                    word-break: keep-all;
-                    font-family: "BIZ UDMincho";
-                    font-size: 10pt;
+            @media print {
+                @page {
+                    margin-inline: 25mm 20mm;
+                    size: A4 portrait;
+                    @top-left {
+                        content: string(section-title);
+                        writing-mode: horizontal-tb;
+                        word-break: keep-all;
+                        font-family: "BIZ UDMincho";
+                        font-size: 10pt;
+                    }
+                    @bottom-left {
+                        content: "国立アイヌ民族博物館";
+                        writing-mode: horizontal-tb;
+                        font-size: 10pt;
+                    }
+                    @bottom-right {
+                        content: counter(page) " / " counter(pages);
+                        writing-mode: horizontal-tb;
+                        font-size: 10pt;
+                    }
                 }
-                @bottom-left {
-                    content: "国立アイヌ民族博物館";
-                    writing-mode: horizontal-tb;
-                    font-size: 10pt;
+                body {
+                    column-count: 2;
+                    column-gap: 4em;
+                    column-fill: auto;
                 }
-                @bottom-right {
-                    content: counter(page) " / " counter(pages);
-                    writing-mode: horizontal-tb;
-                    font-size: 10pt;
-                }
+            }
+            @media screen {
+                body {
+                    margin: 25mm 20mm;
+                }                
             }
             body {
                 writing-mode: vertical-rl;
@@ -42,9 +54,6 @@
                 line-height: 2;
                 /* margin-block: 2em;
                 margin-inline: 4em; */
-                column-count: 2;
-                column-gap: 4em;
-                column-fill: auto;
                 text-underline-offset: 4px;
             }
             h1 {
