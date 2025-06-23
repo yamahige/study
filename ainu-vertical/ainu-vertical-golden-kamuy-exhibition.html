@@ -4,28 +4,129 @@
         <title>第2回特別展示 「ゴールデンカムイ トゥラノ　アㇷ゚カㇱアン ― 杉元佐一とアシㇼパが旅する世界 ―」</title>
             <style>
             @import url('https://fonts.googleapis.com/css2?family=BIZ+UDMincho&family=BIZ+UDPMincho&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap');
-            @page {
-                margin: 20mm;
-                size: A4 landscape;
-            }
-            body {
-                font-family: sans-serif;
-                writing-mode: vertical-rl;
-                text-align: justify;
-                text-spacing-trim: trim-start;
-                text-spacing-trim: trim-both;
-                line-height: 2;
-                margin-block: 2em;
-                margin-inline: 4em;
-            }
-            h1, h2 {
-                font-size: 120%;
-            }
+            @import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic&display=swap');
+
             .ain,
             :lang(ain) {
-                word-break: keep-all;
+                word-break: keep-all; /* CJKテキストの改行を許さない。全角スペースU+3000では改行できる。 */
                 text-align: start;
                 font-family: "BIZ UDMincho";
+            }
+            /* :lang(ain) {
+                color: crimson;
+                font-weight: bold;
+            } */
+            :root {
+                --inside-margin: 72pt;
+                --outside-margin: 36pt;
+            }
+            @media print {
+                @page {
+                    margin-top: 25mm;
+                    margin-bottom: 25mm;
+                    size: A4 portrait;
+                    /* outline: thick solid tomato; */
+                    writing-mode: horizontal-tb;
+                    font-size: 10pt;
+                }
+                @page :first {
+                    @top-right {
+                        content: none;
+                    }
+                    @top-left {
+                        content: none;
+                    }
+                }
+                @page :verso {
+                    margin-left: var(--inside-margin);
+                    margin-right: var(--outside-margin);
+                    @top-right {
+                        content: string(section-title);
+                        word-break: keep-all;
+                        font-family: "BIZ UDMincho";
+                    }
+                    @bottom-right {
+                        content: counter(page) " / " counter(pages);
+                    }
+                    @bottom-left {
+                        content: none;
+                    }
+                }
+                @page :recto {
+                    margin-left: var(--outside-margin);
+                    margin-right: var(--inside-margin);
+                    @top-left {
+                        content: string(section-title);
+                        word-break: keep-all;
+                        font-family: "BIZ UDMincho";
+                    }
+                    @bottom-right {
+                        content: none;
+                    }
+                    @bottom-left {
+                        content: counter(page) " / " counter(pages);
+                    }
+                }
+                body {
+                    column-count: 2;
+                    column-gap: 4em;
+                    column-fill: auto;
+                }
+            }
+            @media screen {
+                body {
+                    margin-top: 2rem;
+                    margin-bottom: 2rem;
+                }
+            }
+            body {
+                writing-mode: vertical-rl;
+                font-size: 10pt;
+                text-align: justify;
+                text-spacing-trim: trim-start;
+                text-spacing-trim: trim-both; /* 約ものの詰め */
+                line-height: 2;
+                /* margin-block: 2em;
+                margin-inline: 4em; */
+                text-underline-offset: 4px;
+            }
+            h1 {
+                font-family: "BIZ UDGothic", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 140%;
+                font-weight: bold;
+                inline-size: 100%;
+                margin-block-start: 0;
+                margin-block-end: 4em;
+                float: top;
+                float-reference: page;
+                text-align: start;
+            }
+            h2 {
+                margin-block-start: 4em;
+                font-family: "BIZ UDGothic", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 120%;
+                break-inside: avoid;
+                text-align: start;
+            }
+            h1 > .ain,
+            h2 > .ain {
+                font-family: "BIZ UDGothic", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            h2 > .ain {
+                string-set: section-title content();
+            }
+            .note {
+                margin-block: 0;
+                margin-inline-start: 4em;
+            }
+            .note:last-of-type {
+                margin-block-end: 3em;
             }
             .dialect {
                 text-align: end;
@@ -35,10 +136,9 @@
             :lang(ain):has(+ .dialect) {
                 margin-block-end: 0;
             }
-            .cite {
-                font-size: 80%;
-                margin-block-start: 2em;
-                text-align: end;
+            a {
+                color: #0000EE;
+                text-decoration: none;
             }
             .noto-serif-jp {
                 font-family: 「Noto Serif JP", serif;
@@ -53,12 +153,14 @@
         </style>
     </head>
     <body>
-    <p>和字間隔（<code>U+3000</code>）1文字で分かち書き。</p>
-    <h1>第2回特別展示 「<span class="ain">ゴールデンカムイ トゥラノ　アㇷ゚カㇱアン</span> ― 杉元佐一と<span class="ain">アシㇼパ</span>が旅する世界 ―」</h1>
+    <h1>第2回特別展示<br>「<span class="ain">ゴールデンカムイ トゥラノ　アㇷ゚カㇱアン</span> ― 杉元佐一と<span class="ain">アシㇼパ</span>が旅する世界 ―」</h1>
+    <p class="note">和字間隔（<code>U+3000</code>）1文字で分かち書き。</p>
+    <p class="note"><a href="https://nam.go.jp/exhibition/floor2/special/goldenkamuy2021/">国立アイヌ民族博物館 第2回特別展示「ゴールデンカムイ <span class="ain">トゥラノ　アㇷ゚カㇱアン</span> ― 杉元佐一と<span class="ain">アシㇼパ</span>が旅する世界 ―」</a>(公開日: 2021年6月24日)より</p>
+    <p class="note">© アイヌ民族文化財団</p>
     <p>本展覧会は、2014年から「週刊ヤングジャンプ」（集英社）にて連載されている<a href="https://youngjump.jp/goldenkamuy/">漫画『ゴールデンカムイ』</a>（野田サトル作）の原作内容を中心に、伝統的なアイヌ料理や動植物との関わり、当時のコタン（村）の生活などに関連する民具資料を原画とともに展示します。また、アイヌ文化だけではなく、作中に登場する樺太（サハリン）北部、沿海地方およびアムール川流域に住むニヴフや、ツングース系のウイルタなどアイヌ民族に隣り合う先住民族や、北海道の砂金、日露戦争とアイヌ、小樽などの当時の街の文化など、作品の中心的な歴史的背景についても紹介します。
 20世紀初頭の北海道・樺太を舞台としたアイヌと和人の関係史を軸に、先住民族アイヌの歴史と文化に触れてください。</p>
     <h2>『ゴールデンカムイ』 <span class="ain">ネコン アン ペ ネ ルウェ アン？</span>／『ゴールデンカムイ』とは</h2>
-    <p lang="ain">『ゴールデンカムイ』　セコㇿ　レヘ　アン　オルㇱペ，　野田サトル　ニㇱパ　ヌイェ　ㇷ゚　ネ　ワ　アスル　アㇱ　ルウェ　ネ．ネ　オルㇱペ　オッタ　ヤウンモシㇼ　タ　アン　ペ　ネ　チキ　ヤンケモシㇼ　タ　アン　ペ　ネ　チキ　テエタ（明治　ケㇱ）　アン　ペ　シンネ，　野田　ニㇱパ　ヌイェ．　アイヌ　ウタㇻ　コンカニ　ポロンノ　カㇻ　ワ　ウエカリレ　コㇿカ　ネン　カ　ウㇰ　ワ　ウカオ．　オロワノ　ウサ　オカイ　ウタㇻ　コンカニ　フナラ　コㇿ　ウコイキ．　スギモト　セコㇿ　レヘ　アン　シサㇺ　トゥミ　オッタ　ラメトッコㇿ　クス　「ソモ　ライ　クㇽ」　セコㇿ　アンレコレ．　ネ　オッカイ　ネワ　アシㇼパ　セコㇿ　レヘ　アン　シネ　ポン　メノコ　コンカニ　フナラ　クス　ピㇱカネ　アㇷ゚カㇱ．　2014　パ　ワノ　タネ　パㇰノ　『ゴールデンカムイ』　オルㇱペ　「週刊ヤングジャンプ」（集英社）　セコㇿ　レヘ　アン　カンピソㇱ　カ　タ　アンヌイェ　コㇿ　アン．　2016　パ　タ　野田　ニㇱパ　「漫画大賞」　アンコレ．</p>
+    <p class="ain">『ゴールデンカムイ』　セコㇿ　レヘ　アン　オルㇱペ，　野田サトル　ニㇱパ　ヌイェ　ㇷ゚　ネ　ワ　アスル　アㇱ　ルウェ　ネ．ネ　オルㇱペ　オッタ　ヤウンモシㇼ　タ　アン　ペ　ネ　チキ　ヤンケモシㇼ　タ　アン　ペ　ネ　チキ　テエタ（明治　ケㇱ）　アン　ペ　シンネ，　野田　ニㇱパ　ヌイェ．　アイヌ　ウタㇻ　コンカニ　ポロンノ　カㇻ　ワ　ウエカリレ　コㇿカ　ネン　カ　ウㇰ　ワ　ウカオ．　オロワノ　ウサ　オカイ　ウタㇻ　コンカニ　フナラ　コㇿ　ウコイキ．　スギモト　セコㇿ　レヘ　アン　シサㇺ　トゥミ　オッタ　ラメトッコㇿ　クス　「ソモ　ライ　クㇽ」　セコㇿ　アンレコレ．　ネ　オッカイ　ネワ　アシㇼパ　セコㇿ　レヘ　アン　シネ　ポン　メノコ　コンカニ　フナラ　クス　ピㇱカネ　アㇷ゚カㇱ．　2014　パ　ワノ　タネ　パㇰノ　『ゴールデンカムイ』　オルㇱペ　「週刊ヤングジャンプ」（集英社）　セコㇿ　レヘ　アン　カンピソㇱ　カ　タ　アンヌイェ　コㇿ　アン．　2016　パ　タ　野田　ニㇱパ　「漫画大賞」　アンコレ．</p>
     <p class="dialect">（アイヌ語：旭川方言）</p>
     <p>『ゴールデンカムイ』は、野田サトル氏によって描かれた漫画です。物語は明治末期の北海道や樺太を舞台とし、アイヌから奪われた莫大な金塊を求めて各地で争奪戦が繰り広げられます。“不死身”と呼ばれた男・杉元とアイヌの少女・<span class="ain">アシㇼパ</span>は共に旅をしながら、金塊の在処(ありか)とその謎に迫ります。2014年より「週刊ヤングジャンプ」（集英社）にて連載中。2016年マンガ大賞受賞。</p>
 
@@ -68,7 +170,7 @@
     <p>長い間、世界中の人びとが金や銀を貨幣の基準としてきました。ゴールドラッシュと呼ばれる金の採掘ブームが世界各地で起こり、ここ北海道も江戸時代（17世紀）には本州から和人が渡ってきて山に入り砂金掘りをしていました。北海道には、<span class="ain">カニカㇻハッタㇻ</span>（金をとる淵）のように砂金掘りに関連するアイヌ語の地名もあります。ユリイタやカッチャなどさまざまな道具が使われました。</p>
 
     <h2>『ゴールデンカムイ』 <span class="ain">オルン ウタㇻ</span>／『ゴールデンカムイ』の登場人物</h2>
-    <p class=""ain">『ゴールデンカムイ』　オッタ　ヤウンモシルンクㇽ，　ヤンケモシルンクㇽ，　シサㇺ，　フレシサㇺ，　ニヴフ，　ウイルタ，　ウサ　オカイ　ウタㇻ　オカイ．　ミピヒ　ヘネ　コㇿ　アエイワンケㇷ゚　ヘネ　野田ニㇱパ　エヤㇺノ　ヌイェ　ワ　アン　ルウェ　ネ．　杉元，　アシㇼパ，　アイヌウタリ，　第七師団ウタリ，　土方ウタリ，　ウサ　オカイ　『ゴールデンカムイ』　イッケウェ　ネ　オカ　ウタㇻ　オルㇱペ　チイェ　コㇿ，　ミピヒ　ヘネ　コㇿ　ペ　ヘネ　エチヌカレアㇱ　ナ．</p>
+    <p class="ain">『ゴールデンカムイ』　オッタ　ヤウンモシルンクㇽ，　ヤンケモシルンクㇽ，　シサㇺ，　フレシサㇺ，　ニヴフ，　ウイルタ，　ウサ　オカイ　ウタㇻ　オカイ．　ミピヒ　ヘネ　コㇿ　アエイワンケㇷ゚　ヘネ　野田ニㇱパ　エヤㇺノ　ヌイェ　ワ　アン　ルウェ　ネ．　杉元，　アシㇼパ，　アイヌウタリ，　第七師団ウタリ，　土方ウタリ，　ウサ　オカイ　『ゴールデンカムイ』　イッケウェ　ネ　オカ　ウタㇻ　オルㇱペ　チイェ　コㇿ，　ミピヒ　ヘネ　コㇿ　ペ　ヘネ　エチヌカレアㇱ　ナ．</p>
     <p class="dialect">（アイヌ語：白老方言）</p>
     <p>『ゴールデンカムイ』には、北海道アイヌ、樺太アイヌ、和人、外国人、ニヴフ、ウイルタなど、さまざまな人々が出てきます。そして、その衣服や道具は丁寧に描かれています。杉元と<span class="ain">アシㇼパ</span>をはじめ、アイヌ、第七師団、土方一派など、主要な登場人物について紹介するとともに、その服装品・装備品を展示しています。</p>
 
@@ -93,19 +195,5 @@
     <p class="dialect">（アイヌ語：沙流方言）</p>
     <p>明治時代末期、北海道は激動の時代でした。明治時代の北海道の街と社会は流動的であり、本州の街とは大きく異なっていました。当時、大勢の和人が北海道へやって来て、各地で暮らしていました。「お雇い外国人」と呼ばれる外国人も来ており、アイヌ、和人、外国人、いろいろな人々が暮らしていました。ここでは『ゴールデンカムイ』に描かれる、当時の街や、ニシン漁、和人の生活道具について展示しています。</p>
 
-    <p class="cite"><a href="https://nam.go.jp/exhibition/floor2/special/goldenkamuy2021/">国立アイヌ民族博物館 第2回特別展示「ゴールデンカムイ <span lan="ain">トゥラノ　アㇷ゚カㇱアン</span> ― 杉元佐一と<span class="ain">アシㇼパ</span>が旅する世界 ―」</a>(公開日: 2021年6月24日)より</p>
-
-    <h2>課題</h2>
-    <p><code>lang="ain"</code>とすると
-        <ul>
-            <li>句読点の位置が日本語と異なってしまう可能性がある。例:<ul>
-<li lang="zh-CN"><code>lang="zh-CN"</code>　ヘロキカㇻ。</li>
-<li lang="ja"><code>lang="ja"</code>　ヘロキカㇻ。</li>
-            </ul></li>
-            <li>漢字が日本語と異なってしまう可能性がある。例:<ul>
-<li lang="zh-CN"><code>lang="zh-CN"</code> 海</li>
-<li lang="ja"><code>lang="ja"</code> 海</li>
-            </ul></li>
-        </ul></p>
     </body>
 </html>
