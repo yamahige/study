@@ -6,20 +6,22 @@
             @import url('https://fonts.googleapis.com/css2?family=BIZ+UDMincho&family=BIZ+UDPMincho&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap');
             @import url('https://fonts.googleapis.com/css2?family=BIZ+UDGothic&display=swap');
 
+            :root {
+                --inside-margin: 72pt;
+                --outside-margin: 36pt;
+                --font-family-serif: "BIZ UDMincho", serif;
+                --font-family-sans-serif: "BIZ UDGothic", sans-serif;
+            }
             .ain,
             :lang(ain) {
                 word-break: keep-all; /* CJKテキストの改行を許さない。全角スペースU+3000では改行できる。 */
                 text-align: start;
-                font-family: "BIZ UDMincho";
+                font-family: var(--font-family-serif);
             }
             /* :lang(ain) {
                 color: crimson;
                 font-weight: bold;
             } */
-            :root {
-                --inside-margin: 72pt;
-                --outside-margin: 36pt;
-            }
             @media print {
                 @page {
                     margin-top: 25mm;
@@ -43,7 +45,7 @@
                     @top-right {
                         content: string(section-title);
                         word-break: keep-all;
-                        font-family: "BIZ UDMincho";
+                        font-family: var(--font-family-serif);
                     }
                     @bottom-right {
                         content: counter(page) " / " counter(pages);
@@ -58,7 +60,7 @@
                     @top-left {
                         content: string(section-title);
                         word-break: keep-all;
-                        font-family: "BIZ UDMincho";
+                        font-family: var(--font-family-serif);
                     }
                     @bottom-right {
                         content: none;
@@ -91,7 +93,7 @@
                 text-underline-offset: 4px;
             }
             h1 {
-                font-family: "BIZ UDGothic", sans-serif;
+                font-family: var(--font-family-sans-serif);
                 font-weight: 400;
                 font-style: normal;
                 font-size: 140%;
@@ -105,7 +107,7 @@
             }
             h2 {
                 margin-block-start: 4em;
-                font-family: "BIZ UDGothic", sans-serif;
+                font-family: var(--font-family-sans-serif);
                 font-weight: 400;
                 font-style: normal;
                 font-size: 120%;
@@ -114,7 +116,7 @@
             }
             h1 > .ain,
             h2 > .ain {
-                font-family: "BIZ UDGothic", sans-serif;
+                font-family: var(--font-family-sans-serif);
                 font-weight: 400;
                 font-style: normal;
             }
@@ -146,7 +148,7 @@
                 font-style: normal;
             }
             .biz-udmincho-regular {
-                font-family: "BIZ UDMincho", serif;
+                font-family: var(--font-family-serif);
                 font-weight: 400;
                 font-style: normal;
             }
