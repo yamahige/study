@@ -87,6 +87,7 @@
                 text-align: justify;
                 text-spacing-trim: trim-start;
                 text-spacing-trim: trim-both; /* 約ものの詰め */
+                line-break: strict; /* 小書きのカナを行頭にしない。 */
                 line-height: 2;
                 /* margin-block: 2em;
                 margin-inline: 4em; */
@@ -104,6 +105,7 @@
                 float: top;
                 float-reference: page;
                 text-align: start;
+                word-break: auto-phrase;
             }
             h2 {
                 margin-block-start: 4em;
@@ -113,6 +115,7 @@
                 font-size: 120%;
                 break-inside: avoid;
                 text-align: start;
+                word-break: auto-phrase;
             }
             h1 > .ain,
             h2 > .ain {
