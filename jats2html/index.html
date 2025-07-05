@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Article Theme HTML to JATS Converter</title>
+        <link rel="stylesheet" href="./index.css" type="text/css" />
+        <script type="module" src="./j2h.js"></script>
+    </head>
+<body>
+    <h1>JATS XML文書をHTMLに変換</h1>
+    <p>JATS XML文書を読み込んで、Vivliostyleでページ組版できるHTML文書に変換する。</p>
+        <p style="text-align: end;">2025-07-04</p>
+    <div class="input-container">
+        <input type="url" id="urlInput" 
+            placeholder="Enter URL to fetch HTML content" 
+            >
+        <button id="fetchButton">読み込んで変換</button>
+    </div>
+    <script type="module">
+        import { J2H } from './j2h.js'; // Import the J2H function
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const url = document.getElementById('urlInput').value;
+            if (url) {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(htmlContent => {
+                        const bodyContent = J2H(htmlContent);
+                        document.getElementById('outHtml').innerText = xmlFormatter(bodyContent, {
+                            collapseContent: true
+                        });
+                        document.getElementById('inputXml').innerText = htmlContent;
+                        PR.prettyPrint();
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                        alert('Failed to fetch HTML content. Please check the URL and try again.');
+                    });
+            } else {
+                alert('Please enter a valid URL.');
+            }
+        });
+    </script>
+    <input type="file" id="fileInput" accept=".html, .xml" />
+    <button id="loadFileButton">読み込んで変換</button>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xml-formatter@3.6.6/dist/browser/xml-formatter-singleton.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autorun=false"></script>
+    <script type="module">
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const content = document.getElementById('outHtml').innerText;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Content copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+    </script>
+    <div class="container">
+        <div class="content">
+            <h2>Source JATS XML</h2>
+            <pre><code id="inputXml" class="source prettyprint lang-html linenums"></code></pre>
+        </div>
+        <div class="content">
+            <h2>Converted HTML <button id="copyButton">Copy to Clipboard</button></h2>
+            <pre><code id="outHtml" class="source prettyprint lang-xml linenums"></code></pre>
+        </div>
+    </div>
+    <script type="module">
+        import { J2H } from './j2h.js'; // Import the J2H function
+        document.getElementById('loadFileButton').addEventListener('click', function() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const content = event.target.result;
+                    const bodyContent = J2H(content);
+                    document.getElementById('outHtml').innerText = xmlFormatter(bodyContent,
+                        {
+                            collapseContent: true
+                        }
+                    );
+                    document.getElementById('inputXml').innerText = content;
+                    PR.prettyPrint()
+                };
+                reader.readAsText(file);
+            } else {
+                alert('Please select a file to load.');
+            }
+        });
+    </script>
+    <p>Thank you for visiting!</p>
+</html>
