@@ -3,20 +3,29 @@
 *** */
 
 export const Convert = (document) => {
-    // jatsTitle(document);
+    articleTitle2Title(document);
     wrapLabelTitle(document);
+    title2h(document);
     img(document);
     // jatsBody(document);
 }
 
-const jatsTitle = (document) => {
-    document.querySelectorAll('title').forEach((title) => {
-        // console.log(title);
-        const jatsTitle = document.createElement('jats-title');
-        title.after(jatsTitle);
-        jatsTitle.append(...title.childNodes);
+const articleTitle2Title = (document) => {
+    const articleTitle = document.querySelector('article-title');
+    if (articleTitle) {
+        const title = document.createElement('title');
+        title.textContent = articleTitle.textContent;
+        document.head.append(title);
+    }
+}
+
+const title2h = (document) => {
+    document.querySelectorAll('jats-body > sec > jats-title-wrap').forEach((title) => {
+        const h2 = document.createElement('h2');
+        title.after(h2);
+        h2.append(...title.childNodes);
         for (const attr of title.attributes) {
-            jatsTitle.setAttribute(attr.name, attr.value);
+            h2.setAttribute(attr.name, attr.value);
         }
         title.remove();
     });
