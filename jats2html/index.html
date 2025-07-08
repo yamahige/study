@@ -20,7 +20,12 @@
     <script type="module">
         import { J2H } from './j2h.js'; // Import the J2H function
         document.getElementById('fetchButton').addEventListener('click', function() {
+            document.querySelectorAll('.prettyprinted')
+                .forEach(e => e.classList.remove('prettyprinted'));
+            document.getElementById('inputXml').innerText = '';
+            document.getElementById('outHtml').innerText = '';
             const url = document.getElementById('urlInput').value;
+            document.getElementById('input-name').innerText = url;
             if (url) {
                 fetch(url)
                     .then(response => {
@@ -63,20 +68,29 @@
     <div class="container">
         <div class="content">
             <h2>Source JATS XML</h2>
-            <pre><code id="inputXml" class="source prettyprint lang-html linenums"></code></pre>
+            <div id="input-name" class="info-contain"></div>
+            <pre><code id="inputXml" class="source prettyprint lang-xml linenums"></code></pre>
         </div>
         <div class="content">
-            <h2>Converted HTML <button id="copyButton">Copy to Clipboard</button></h2>
-            <pre><code id="outHtml" class="source prettyprint lang-xml linenums"></code></pre>
+            <h2>Converted HTML</h2>
+            <div class="info-contain">
+                <button id="copyButton">Copy to Clipboard</button>
+            </div>
+            <pre><code id="outHtml" class="source prettyprint lang-html linenums"></code></pre>
         </div>
     </div>
     <script type="module">
         import { J2H } from './j2h.js'; // Import the J2H function
         document.getElementById('loadFileButton').addEventListener('click', function() {
+            document.querySelectorAll('.prettyprinted')
+                .forEach(e => e.classList.remove('prettyprinted'));
+            document.getElementById('inputXml').innerText = '';
+            document.getElementById('outHtml').innerText = '';
             const fileInput = document.getElementById('fileInput');
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
+                document.getElementById('input-name').innerText = file.name;
                 reader.onload = function(event) {
                     const content = event.target.result;
                     const bodyContent = J2H(content);
