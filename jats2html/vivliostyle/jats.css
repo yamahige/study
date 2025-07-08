@@ -1,0 +1,569 @@
+/* ***
+JATS XML
+*** */
+
+:root {
+    --serif-font-family: "Times New Roman", "游明朝体", "Yu Mincho", YuMincho, serif;
+    --serif-font-family-en: "Times New Roman", serif;
+    --sans-serif-font-family: "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", "meiryo", sans-serif;
+    --sans-serif-font-family-en: "Arial", sans-serif;
+    font-family: var(--serif-font-family);
+    font-size: 9pt;
+    hyphens: auto;
+    line-break: strict;
+    --line-height: 1.8;
+    line-height: var(--line-height);
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+    tab-size: 4;
+    /* text-align: justify; */
+    text-align: start;
+    text-spacing: auto;
+    text-spacing-trim: trim-both;
+    text-underline-offset: auto;
+    text-underline-position: left;
+    text-rendering: optimizeLegibility;
+    word-break: normal;
+    /*
+    word-break: auto-phrase;
+    */
+    word-spacing: normal;
+    orphans: 2;
+    widows: 2;
+}
+
+@media screen {
+    :root {
+        margin-inline: 2em;
+        max-inline-size: 40em;
+    }
+}
+
+@media print {
+    :root {
+        margin: 0;
+    }
+ 
+    @page {
+        size: A5 portrait;
+        margin-block-start: 25mm;
+        margin-block-end: 25mm;
+        margin-inside: 25mm;
+        margin-outside: 15mm;
+    }
+    @page :left {
+        @top-left {
+        }
+        @bottom-left {
+            writing-mode: horizontal-tb;
+            content: counter(page) "\2003\2016\2003" string(article-title, first); /* &emsp;‖&emsp; */
+            font-size: 90%;
+            font-family: serif;
+            text-align: start;
+            word-break: normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+    @page :right {
+        @top-right {
+        }
+        @bottom-right {
+            writing-mode: horizontal-tb;
+            content: string(section-title-label, first) string(section-title, first) "\2003\2016\2003" counter(page); /* &emsp;‖&emsp; */
+            font-size: 90%;
+            font-family: serif;
+            text-align: end;
+            word-break: normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+/* ***
+未定義の要素を取り敢えずブロック要素にする
+*** */
+
+/* * {
+    display: block;
+} */
+
+/* ***
+front
+*** */
+
+front {
+    display: block;
+    margin-block-end: 1em;
+    /* float: block-start;
+    float-reference: page; */
+    inline-size: 100%;
+}
+
+issn[pub-type="epub"]::before,
+issn[pub-type="ppub"]::before {
+    content: "issn " attr(pub-type) ": ";
+    font-weight: bold;
+}
+issn {
+    white-space: pre;
+}
+issn[pub-type="epub"]::after,
+issn[pub-type="ppub"]::after {
+    content: "\A";
+}
+
+/* ***
+ジャーナルの情報
+*** */
+
+journal-id::before {
+    content: "Journal ID: ";
+}
+journal-id {
+    display: block;
+}
+journal-id::after {
+    content: " (" attr(journal-id-type) ")";
+    display: inline;
+}
+journal-title-group {
+    display: block;
+    margin-block-end: 0.5em;
+    word-break: auto-phrase;
+    text-align: start;
+}
+journal-title {
+    display: inline;
+    font-family: var(--sans-serif-font-family);
+    font-size: 2em;
+    font-weight: bold;
+    margin-block-end: 0.5em;
+}
+journal-subtitle {
+    display: inline;
+    margin-inline-start: 1em;
+    font-family: var(--serif-font-family);
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-block-end: 0.5em;
+}
+trans-title-group {
+    display: block;
+    margin-block-end: 0.5em;
+    font-family: var(--sans-serif-font-family-en);
+    font-size: 1.5em;
+    font-weight: bold;
+    word-break: auto-phrase;
+    text-align: start;
+}
+publisher {
+    display: block;
+    margin-inline-start: 10rem;
+    font-size: 1rem;
+    --padding: 4rem;
+    padding-inline-start: var(--padding);
+}
+publisher::before {
+    content: "出版社: ";
+    display: block;
+    text-indent: calc(-1 * var(--padding));
+    float: left;
+}
+publisher-name[xml\:lang="ja"] {
+    display: block;
+    font-family: var(--serif-font-family);
+}
+publisher-name[xml\:lang="en"] {
+    display: block;
+    font-family: var(--serif-font-family-en);
+}
+
+/* ***
+論文の情報
+*** */
+
+article-meta {
+    display: block;
+    margin-block-end: 0.5em;
+}
+article-id::before {
+    content: "Article ID: ";
+}
+article-id {
+    display: block;
+    text-align: end;
+}
+article-id::after {
+    content: " (" attr(pub-id-type) ")";
+    display: inline;
+}
+article-title {
+    display: block;
+    font-family: var(--sans-serif-font-family);
+    font-size: 1.75em;
+    font-weight: bold;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    word-break: auto-phrase;
+    text-align: start;
+    string-set: article-title content();
+    --padding: 4em;
+    padding-inline-start: var(--padding);
+    text-indent: calc(-1 * var(--padding));
+}
+contrib-group {
+    display: block;
+}
+contrib[contrib-type="author"] {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1ex;
+    font-weight: bold;
+}
+contrib name[name-style] {
+    display: flex;
+    column-gap: 1ex;
+}
+contrib name[name-style="eastern"] {
+    flex-direction: row;
+}
+contrib name[name-style="western"] {
+    flex-direction: row-reverse;
+}
+contrib name surname,
+contrib name given-names {
+    display: inline;
+}
+contrib xref::before {
+    content: attr(rid) ")";
+    vertical-align: super;
+    font-size: 80%;
+    margin-inline-start: .5em;
+}
+
+aff-alternatives {
+    display: block;
+}
+aff-alternatives::before {
+    content: attr(id) ")";
+    margin-inline-end: 1ex;
+}
+
+pub-date::before {
+    display: block;
+    text-align: end;
+}
+pub-date {
+    display: inline;
+    margin-inline-end: 0.5em;
+    text-align: end;;
+}
+pub-date month,
+pub-date day,
+pub-date year {
+    display: inline;
+    margin-inline-end: 0;
+}
+pub-date month::after {
+    content: "月";
+}
+pub-date day::after {
+    content: "日";
+}
+pub-date year::after {
+    content: "年";
+}
+volume,
+issue,
+fpage,
+lpage {
+    display: inline;
+}
+volume::before {
+    content: "vol. ";
+    display: inline;
+}
+issue::before {
+    content: " no. ";
+    display: inline;
+}
+fpage::before {
+    content: " pp.";
+    display: inline;
+}
+fpage {
+    display: inline;
+}
+fpage::after {
+    content: "\2013";
+    display: inline;
+}
+lpage {
+    display: inline;
+}
+
+/* ***
+ボディ
+*** */
+
+jats-body {
+    display: block;
+    margin-block-start: 3em;
+}
+
+/* ***
+`sec`、`fig`、`table-wrap`の見出し
+fig > captoinは削除されて、titleが格上げされる
+*** */
+
+h2,
+jats-title-wrap {
+    display: block;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+    word-break: auto-phrase;
+    break-after: avoid;
+}
+h2,
+sec > jats-title-wrap {
+    margin-block: 1em;
+    break-inside: avoid;
+}
+h2,
+sec > jats-title-wrap {
+    padding-inline-start: 2em;
+}
+sec > h2 > label,
+sec > jats-title-wrap > label {
+    display: inline;
+    float: left;
+    text-indent: -2em;
+}
+jats-body > sec > h2,
+jats-body > sec > jats-title-wrap {
+    margin-block: 1em;
+    font-size: 1.5em;
+    border-block-end: .1em solid darkgrey;
+}
+jats-body > sec > h2 > label,
+jats-body > sec > jats-title-wrap > label {
+    display: block;
+    text-decoration: underline;
+    text-underline-offset: 0.4em;
+    text-decoration-thickness: 0.2em;
+    text-decoration-color: darkgrey;
+    padding-block-end: .3em;
+}
+sec > sec > jats-title {
+    font-size: 1em;
+}
+jats-body > sec > h2 > label,
+jats-body > sec > jats-title-wrap > label {
+    string-set: section-title-label content();
+}
+jats-body > sec > h2 > jats-title,
+jats-body > sec > jats-title-wrap > jats-title {
+    string-set: section-title content();
+}
+
+fig > jats-title-wrap,
+sec > h2,
+sec > jats-title-wrap {
+    text-align: start;
+}
+table-wrap > jats-title-wrap {
+    text-align: center;
+}
+fig > jats-title-wrap,
+table-wrap > jats-title-wrap {
+    margin-block-end: 1em;
+}
+
+fig > jats-title-wrap {
+    font-size: 1em;
+}
+
+/* ***
+段落
+*** */
+
+p {
+    display: block;
+    margin-block: 0;
+    text-align: justify;
+}
+p:not(:has(fig)) + p {
+    text-indent: 1em;
+}
+
+/* ***
+脚注
+*** */
+
+fn-group {
+    display: block;
+    margin-block-start: 1em;
+    padding-block-start: 1em;
+    border-block-start: 1px solid black;
+}
+fn-group > jats-title {
+    break-after: avoid;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+jats-title + fn {
+    break-before: avoid;
+    /* 配下のpが長いとうまくいかないかも */
+    break-inside: avoid;
+}
+fn-group p {
+    text-align: start;
+    --padding: 2em;
+    padding-inline-start: var(--padding);
+    text-indent: calc(-1 * var(--padding));
+}
+
+/* ***
+リンク
+*** */
+
+xref,
+ext-link {
+    display: inline;
+    color: #0000ff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* ***
+inline要素たち
+*** */
+
+monospace,
+bold,
+sans-serif {
+    display: inline;
+}
+
+monospace {
+    font-family: monospace;
+}
+
+bold {
+    font-weight: bold;
+}
+
+sans-serif {
+    font-family: sans-serif;
+}
+
+/* ***
+図
+*** */
+
+fig {
+    display: block;
+    text-indent: 0;
+    text-align: center;
+}
+
+@media print {
+    table-wrap,
+    fig {
+        margin-inline: auto;
+        margin-block: 1em;
+        page-break-inside: avoid;
+    }
+}
+
+img {
+    max-inline-size: 90%;
+    max-block-size: 60vh;
+    margin-inline: auto;
+}
+/*
+graphic {
+}
+*/
+
+/* ***
+表
+*** */
+
+table-wrap {
+    display: block;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    /*
+    break-inside: avoid;
+    */
+    margin-inline-start: auto; /* 中央揃え */
+    margin-inline-end: auto; /* 中央揃え */
+}
+table thead th,
+table thead td {
+    border-top: 1px solid;
+    border-bottom: 2px double;
+}
+table tbody tr:last-child th,
+table tbody tr:last-child td {
+    border-bottom: 1px solid;
+}
+
+/* ***
+箇条書き
+*** */
+
+list-item {
+    display: block;
+    clear: both;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 1.5em;
+}
+list-item > label {
+    display: inline;
+    float: left;
+    font-weight: bold;
+    margin-inline: 0;
+    text-indent: -1.5em;
+}
+list-item > label + p {
+    display: inline;
+    margin-inline-start: 0;
+}
+
+/* ***
+コード
+`code`要素がHTMLの`pre`要素に相当。
+*** */
+
+code {
+    display: block;
+    font-family: monospace;
+    /* font-family: 'Menlo', 'Monaco', 'Consolas', monospace; */
+    font-size: 75%;
+    white-space: pre-wrap;
+    text-align: start;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    tab-size: 2;
+    line-height: 1.5;
+    background-color: #f5f5f5;
+    margin-block: 0.5em;
+    padding-block: 0.25em;
+    padding-inline: 0;
+    border-radius: 0.25em;
+    border: 1px solid #ccc;
+}
+
+/* ***
+End of script
+*** */

@@ -1,0 +1,10 @@
+/* ***
+JATS XML
+本文
+*** */
+
+@import url(./jats.css);
+
+front > journal-meta {
+    display: none;
+}

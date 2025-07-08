@@ -1,0 +1,40 @@
+/* ***
+JATS XML
+*** */
+
+@import url(./jats.css);
+
+@media print {
+    @page :left {
+        @bottom-left {
+            content: counter(page, lower-roman) "\2003\2016\2003" string(article-title, first);
+        }
+    }
+    @page :right {
+        @bottom-right {
+            content: string(article-title, first)  "\2003\2016\2003" counter(page, lower-roman);
+        }
+    }
+}
+
+h1 {
+    string-set: article-title content(); /* 上書き */
+}
+code {
+    display: inline;
+}
+
+nav ol {
+    list-style-type: none;
+}
+nav li a {
+    text-decoration: none;
+}
+nav li a::after {
+    content: leader(dotted) " " target-counter(attr(href), page);
+    text-align: end;
+}
+
+/* ***
+End of script
+*** */

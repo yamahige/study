@@ -1,0 +1,88 @@
+/* ***
+JATS XML
+奥付
+*** */
+
+@import url(./jats.css);
+
+article-meta > article-id,
+article-meta > article-categories,
+article-meta > title-group,
+article-meta > contrib-group,
+jats-body,
+back {
+    display: none;
+}
+
+journal-meta {
+    display: block;
+    float: block-end;
+    float-reference: page;
+}
+
+journal-title-group {
+    border-block-end: thin solid black;
+    text-align: start;
+}
+journal-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+journal-subtitle {
+    font-size: 1rem;
+    font-family: var(--serif-font-family);
+    font-weight: normal;
+}
+trans-title-group {
+    font-family: var(--serif-font-family);
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+article-meta {
+    display: block;
+    float: block-end;
+    float-reference: page;
+}
+pub-date::before {
+    display: block;
+    text-align: end;
+}
+pub-date {
+    display: inline !important;
+    margin-inline-end: 0.5em;
+    text-align: end;;
+}
+pub-date month,
+pub-date day,
+pub-date year {
+    display: inline;
+    margin-inline-end: 0;
+}
+pub-date month::after {
+    content: "月";
+}
+pub-date day::after {
+    content: "日";
+}
+pub-date year::after {
+    content: "年 発行";
+}
+volume,
+issue,
+fpage,
+lpage,
+fpage {
+    display: none;
+}
+
+@page :left {
+    @bottom-left {
+        content: none;
+    }
+}
+@page :right {
+    @bottom-right {
+        content: none;
+    }
+}

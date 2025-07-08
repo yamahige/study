@@ -1,0 +1,30 @@
+/* ***
+JATS XML
+*** */
+
+@import url(./jats.css);
+
+front > journal-meta {
+    display: none;
+}
+
+@media print {
+    @page :left {
+        @bottom-left {
+            content: counter(page, lower-roman) "\2003\2016\2003序文"; /* &emsp;‖&emsp; */
+        }
+    }
+    @page :right {
+        @bottom-right {
+            content: "序文\2003\2016\2003" counter(page, lower-roman); /* &emsp;‖&emsp; */
+        }
+    }
+}
+
+article-title {
+    --padding: 3em;
+}
+
+/* ***
+End of script
+*** */
