@@ -7,6 +7,7 @@ export const Convert = (document) => {
     wrapLabelTitle(document);
     title2h(document);
     img(document);
+    math(document);
     // jatsBody(document);
 }
 
@@ -65,6 +66,12 @@ const img = (document) => {
             }
         }
         graphic.remove();
+    });
+}
+
+const math = (document) => {
+    document.querySelectorAll('disp-formula, inline-formula').forEach((math) => {
+        math.setAttribute('data-math-typeset', 'true');
     });
 }
 
