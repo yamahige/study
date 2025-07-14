@@ -8,6 +8,7 @@ export const Convert = (document) => {
     title2h(document);
     img(document);
     math(document);
+    xref(document);
     // jatsBody(document);
 }
 
@@ -74,6 +75,16 @@ const math = (document) => {
         math.setAttribute('data-math-typeset', 'true');
     });
 }
+
+const xref = (document) => {
+    document.querySelectorAll('xref').forEach((xref) => {
+        const rid = xref.getAttribute('rid');
+        if (rid) {
+            const href = '#' + rid;
+            xref.setAttribute('href', href);
+        }
+    });
+};
 
 /* ***
 End of script
