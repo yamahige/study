@@ -71,7 +71,7 @@ const img = (document) => {
 }
 
 const math = (document) => {
-    document.querySelectorAll('disp-formula, inline-formula').forEach((math) => {
+    document.querySelectorAll('tex-math').forEach((math) => {
         math.setAttribute('data-math-typeset', 'true');
     });
 }
