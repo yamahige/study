@@ -37,6 +37,7 @@
                     })
                     .then(htmlContent => {
                         const bodyContent = J2H(htmlContent);
+                        document.getElementById('rawContent').value = bodyContent;
                         document.getElementById('outHtml').innerText = xmlFormatter(bodyContent, {
                             collapseContent: true
                         });
@@ -57,10 +58,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xml-formatter@3.6.6/dist/browser/xml-formatter-singleton.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autorun=false"></script>
     <script type="module">
+        document.getElementById('copyRawButton').addEventListener('click', function() {
+            const content = document.getElementById('rawContent').value;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Raw Content copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+    </script>
+    <script type="module">
         document.getElementById('copyButton').addEventListener('click', function() {
             const content = document.getElementById('outHtml').innerText;
             navigator.clipboard.writeText(content).then(() => {
-                alert('Content copied to clipboard!');
+                alert('Prettified Content copied to clipboard!');
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
@@ -75,9 +86,11 @@
         <div class="content">
             <h2>Converted HTML</h2>
             <div class="info-contain">
-                <button id="copyButton">Copy to Clipboard</button>
+                <button id="copyRawButton">Copy to Clipboard</button>
+                <button id="copyButton">Copy Prettified to Clipboard</button>
             </div>
             <pre><code id="outHtml" class="source prettyprint lang-html linenums"></code></pre>
+            <textarea id="rawContent"></textarea>
         </div>
     </div>
     <script type="module">
@@ -95,6 +108,7 @@
                 reader.onload = function(event) {
                     const content = event.target.result;
                     const bodyContent = J2H(content);
+                    document.getElementById('rawContent').value = bodyContent;
                     document.getElementById('outHtml').innerText = xmlFormatter(bodyContent,
                         {
                             collapseContent: true

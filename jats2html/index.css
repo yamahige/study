@@ -49,3 +49,7 @@ input[type="file"] {
     padding: 10px;
     background-color: #f9f9f9;
 }
+#rawContent {
+    display: none;
+    white-space: pre;
+}
