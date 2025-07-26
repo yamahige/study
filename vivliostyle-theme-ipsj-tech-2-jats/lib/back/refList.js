@@ -2,6 +2,8 @@
 参考文献
 *** */
 
+import { Label } from '../label.js';
+
 let document;
 
 export const RefList = (documentParam, back) => {
@@ -32,6 +34,14 @@ export const RefList = (documentParam, back) => {
             });
         h2.remove();
         section.remove();
+
+        Label(document, document,
+            'ref-list > ref',
+            { ja: '[', en: '[' },
+            { ja: ']', en: ']' },
+            'ref',
+            'afterbegin'
+        );
     }
     );
 }

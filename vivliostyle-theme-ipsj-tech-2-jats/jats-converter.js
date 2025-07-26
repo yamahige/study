@@ -8,10 +8,13 @@ import { Back } from './lib/back/back.js';
 import { Sec } from './lib/sec.js';
 import { List } from './lib/list.js';
 import { Math } from './lib/math.js';
+import { Label } from './lib/label.js';
 import { Figure } from './lib/figure.js';
 import { TableWrap } from './lib/tableWrap.js';
 import { Xref } from './lib/xref.js';
 import { ExtLink } from './lib/extLink.js';
+import { Span } from './lib/span.js';
+import { Blockquote } from './lib/blockquote.js';
 import { Pre } from './lib/pre.js';
 import { Code } from './lib/code.js';
 import { ReplaceNS } from './lib/util.js';
@@ -47,20 +50,26 @@ export const ConvertToJATS = (content) => {
     const back = Back(document);
 
     /* ***
-    seciton
-    backの後で呼ぶこと。付録がsection要素であることを前提にbackが処理してる
-    *** */
-    Sec(document);
-
-    /* ***
     リスト
     *** */
     List(document);
 
     /* ***
+    脚注
+    *** */
+    // FnGroup(document);
+
+    /* ***
     数式
     *** */
     Math(document);
+    // 数式番号の参照
+    Label(document, document,
+        '[specific-use~="equation"][specific-use~="number"]',
+        { ja: '(', en: '(' },
+        { ja: ')', en: ')' },
+        'disp-formula',
+        'beforeend');
 
     /* ***
     図
@@ -79,6 +88,16 @@ export const ConvertToJATS = (content) => {
     ExtLink(document);
 
     /* ***
+    inline要素
+    *** */
+    Span(document);
+
+    /* ***
+    blockquote
+    *** */
+    Blockquote(document);
+
+    /* ***
     pre
     *** */
     Pre(document);
@@ -87,6 +106,12 @@ export const ConvertToJATS = (content) => {
     Code
     *** */
     Code(document);
+
+    /* ***
+    seciton
+    backの後で呼ぶこと。付録がsection要素であることを前提にbackが処理してる
+    *** */
+    Sec(document);
 
     /* ***
     HTML名前空間からJATS名前空間にノードをコピー

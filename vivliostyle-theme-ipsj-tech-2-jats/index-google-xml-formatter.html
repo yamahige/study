@@ -17,6 +17,7 @@
     <p>「<a href="https://gihyo.jp/article/2025/02/vivliostyle-05">VFMで学会論文を書いてVivliostyleで組んで投稿する</a>」の
         サンプルCSSのHTMLを読み込んで<a href="https://xspa.jp/what/">JATS (Journal Article Tag Suite)</a>のXMLに変換します。
     このHTMLは、Vivliostyleが入力されたVFMを組版するときに途中で生成するもので、".vs-◯◯.html"といった名前の隠しファイルです。</p>
+        <p style="text-align: end;">v1.2 2025-07-26</p>
         <p style="text-align: end;">v1.1 2025-06-12</p>
         <p style="text-align: end;">v1 2025-06-09</p>
     <div class="input-container">
@@ -26,7 +27,12 @@
     <script type="module">
         import { ConvertToJATS } from './jats-converter.js'; // Import the ConvertToJATS function
         document.getElementById('fetchButton').addEventListener('click', function() {
+            document.querySelectorAll('.prettyprinted')
+                .forEach(e => e.classList.remove('prettyprinted'));
+            document.getElementById('inputHtml').innerText = '';
+            document.getElementById('fileContent').innerText = '';
             const url = document.getElementById('urlInput').value;
+            document.getElementById('input-name').innerText = url;
             if (url) {
                 fetch(url)
                     .then(response => {
@@ -37,6 +43,7 @@
                     })
                     .then(htmlContent => {
                         const bodyContent = ConvertToJATS(htmlContent);
+                        document.getElementById('rawContent').value = bodyContent;
                         document.getElementById('fileContent').innerText = xmlFormatter(bodyContent, {
                             collapseContent: true
                         });
@@ -57,10 +64,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/xml-formatter@3.6.6/dist/browser/xml-formatter-singleton.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?autorun=false"></script>
     <script type="module">
+        document.getElementById('copyRawButton').addEventListener('click', function() {
+            const content = document.getElementById('rawContent').value;
+            navigator.clipboard.writeText(content).then(() => {
+                alert('Raw Content copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+    </script>
+    <script type="module">
         document.getElementById('copyButton').addEventListener('click', function() {
             const content = document.getElementById('fileContent').innerText;
             navigator.clipboard.writeText(content).then(() => {
-                alert('Content copied to clipboard!');
+                alert('Prettified Content copied to clipboard!');
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
@@ -69,23 +86,35 @@
     <div class="container">
         <div class="content">
             <h2>Source HTML Content</h2>
+            <div id="input-name" class="info-contain"></div>
             <pre><code id="inputHtml" class="source prettyprint lang-html linenums"></code></pre>
         </div>
         <div class="content">
-            <h2>Converted JATS Content <button id="copyButton">Copy to Clipboard</button></h2>
+            <h2>Converted JATS Content</h2>
+            <div class="info-contain">
+                <button id="copyRawButton">Copy to Clipboard</button>
+                <button id="copyButton">Copy Prettified to Clipboard</button>
+            </div>
             <pre><code id="fileContent" class="source prettyprint lang-xml linenums"></code></pre>
+            <textarea id="rawContent"></textarea>
         </div>
     </div>
     <script type="module">
         import { ConvertToJATS } from './jats-converter.js'; // Import the ConvertToJATS function
         document.getElementById('loadFileButton').addEventListener('click', function() {
+            document.querySelectorAll('.prettyprinted')
+                .forEach(e => e.classList.remove('prettyprinted'));
+            document.getElementById('inputHtml').innerText = '';
+            document.getElementById('fileContent').innerText = '';
             const fileInput = document.getElementById('fileInput');
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const reader = new FileReader();
+                document.getElementById('input-name').innerText = file.name;
                 reader.onload = function(event) {
                     const content = event.target.result;
                     const bodyContent = ConvertToJATS(content);
+                    document.getElementById('rawContent').value = bodyContent;
                     document.getElementById('fileContent').innerText = xmlFormatter(bodyContent,
                         {
                             collapseContent: true

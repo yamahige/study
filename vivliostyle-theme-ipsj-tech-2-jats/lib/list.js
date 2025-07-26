@@ -2,15 +2,14 @@
 リスト
 *** */
 
-let DOC;
+let document;
 
-export const List = (document) => {
-    DOC = document;
+export const List = (documentP) => {
+    document = documentP;
     document.querySelectorAll('ul, ol').forEach(list => ulol(list));
 }
 
 const ulol = (ul) => {
-    const document = DOC;
     const list = document.createElement('list');
     ul.after(list);
     if (ul.matches('ul')) {
@@ -24,28 +23,24 @@ const ulol = (ul) => {
     }
     Array.from(ul.children)
         .filter(child => child.matches('li'))
-        .forEach(li => {
+        .forEach((li, index) => {
             const item = document.createElement('list-item');
-            li.childNodes.forEach((child) => {
-                if (child.nodeType === 3) { // Text node
-                    const p = document.createElement('p');
-                    p.appendChild(document.createTextNode(child.textContent));
-                    item.appendChild(p);
-                } else if (child.nodeType === 1) { // Element node
-                    if (child.matches("p")) {
-                        item.appendChild(child);
-                    } else if (child.matches('ul, ol')) {
-                        item.appendChild(ulol(ul));
-                    }
-                    else {
-                        const p = document.createElement('p');
-                        p.appendChild(child);
-                        item.appendChild(p);
-                    }
-                }
-                list.appendChild(item);
-                child.remove();
-            });
+            if (Array.from(li.childNodes)
+                .some(node => node.nodeType === 3 && node.textContent.trim() !== "")) {
+                const p = document.createElement('p');
+                p.append(...li.childNodes);
+                item.append(p);
+            } else {
+                item.append(...li.children);
+            }
+            const label = document.createElement('label');
+            if (ul.matches('ol') && label) {
+                label.textContent = `（${index + 1}）`;
+            } else {
+                label.textContent = "\u25CF"; // Unicode bullet character
+            }
+            item.prepend(label);
+            list.append(item);
         });
     ul.remove();
     return list;

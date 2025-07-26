@@ -2,18 +2,17 @@
 文字修飾
 *** */
 
-var document;
 const getComputedStyle = (span) => {
     return span.style;
 };
 
-export const Span = (documentP, element) => {
-    document = documentP;
-    bold(element);
-    italic(element);
-    strike(element);
-    br(element);
-    namedStyledContent(element);
+export const Span = (document) => {
+    em(document);
+    bold(document);
+    // italic(document);
+    strike(document);
+    br(document);
+    namedStyledContent(document);
     // Array.from(element.children)
     //     .filter(child => child.matches('span'))
     //     .forEach(span => {
@@ -22,9 +21,8 @@ export const Span = (documentP, element) => {
     //     });
 }
 
-const namedStyledContent = (span) => {
-    Array.from(span.children)
-        .filter(child => child.matches('span'))
+const namedStyledContent = (document) => {
+    document.querySelectorAll('span')
         .forEach(s => {
             let namedStyledContent;
             if (s.className) {
@@ -36,14 +34,22 @@ const namedStyledContent = (span) => {
             const style = s.getAttribute('style');
             if (style) namedStyledContent.setAttribute('style', style);
             namedStyledContent.append(...s.childNodes);
-            s.after(namedStyledContent);
-            s.remove();
+            s.replaceWith(namedStyledContent);
         })
 }
 
-const bold = (span) => {
-    Array.from(span.children)
-        .filter(child => child.matches('strong'))
+const em = (document) => {
+    document.querySelectorAll('em')
+        .forEach(e => {
+            const namedContent = document.createElement('named-content');
+            namedContent.append(...e.childNodes);
+            namedContent.setAttribute('content-type', 'em');
+            e.replaceWith(namedContent);
+        });
+};
+
+const bold = (document) => {
+    document.querySelectorAll('strong')
         .forEach(s => {
             const bold = document.createElement('bold');
             bold.textContent = s.textContent;
@@ -52,20 +58,18 @@ const bold = (span) => {
         });
 };
 
-const italic = (span) => {
-    Array.from(span.children)
-        .filter(child => child.matches('em'))
-        .forEach(e => {
-            const italic = document.createElement('italic');
-            italic.textContent = e.textContent;
-            e.after(italic);
-            e.remove();
-        });
-};
+// const italic = (document) => {
+//     document.querySelectorAll('em')
+//         .forEach(e => {
+//             const italic = document.createElement('italic');
+//             italic.textContent = e.textContent;
+//             e.after(italic);
+//             e.remove();
+//         });
+// };
 
-const strike = (span) => {
-    Array.from(span.children)
-        .filter(child => child.matches('del'))
+const strike = (document) => {
+    document.querySelectorAll('del')
         .forEach(s => {
             const strike = document.createElement('strike');
             strike.textContent = s.textContent;
@@ -74,9 +78,8 @@ const strike = (span) => {
         });
 };
 
-const br = (span) => {
-    Array.from(span.children)
-        .filter(child => child.matches('br'))
+const br = (document) => {
+    document.querySelectorAll('br')
         .forEach(br => {
             br.insertAdjacentHTML('afterend', '\n');
             br.remove();

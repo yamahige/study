@@ -1,13 +1,10 @@
-<!doctype html>
-<html lang="ja">
-  <head>
+<!DOCTYPE html><html lang="ja"><head>
     <meta charset="utf-8">
     <title>Vivliostyleで学会論文を投稿する</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./table.css">
-    <link rel="stylesheet" href="./screen.css" media="screen">
-    <link rel="stylesheet" href="./print.css" media="print">
-    <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="stylesheet" href="ipsj-tech.css">
+    <link rel="stylesheet" href="sample-table.css">
+    <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
   </head>
   <body>
     <header><!-- sectionを作らせない -->
@@ -290,14 +287,14 @@
         <p><a href="#fig-01" class="figref"></a>、<a href="#fig-02" class="figref"></a>、<a href="#fig-03" class="figref"></a>、<a href="#fig-04" class="figref"></a>がどこかにあるはず。</p>
         <p>色は匂へど散りぬるを我が世誰ぞ常ならむ、有為の奥山今日越えて浅き夢見し酔ひもせず。</p>
         <figure class="fig" id="fig-01">
-          <img src="process-v2.svg">
+          <img src="process.svg">
           <figcaption>
             <div>HTMLで挿入した図。図番号を自動生成。日英2つのキャプションを付けて、それぞれのプレフィックスで図番号を付けられる。キャプションの中で文献を参照できる<a class="cite" href="#ref-06"></a></div>
             <div lang="en">Graphic inserted as HTML format.</div>
           </figcaption>
         </figure>
         <figure>
-          <img src="process-md-v2.svg" alt="Markdownで挿入した図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。" class="fig" id="fig-02">
+          <img src="process-md.svg" alt="Markdownで挿入した図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。" class="fig" id="fig-02">
           <figcaption aria-hidden="true">Markdownで挿入した図。日英2つのキャプションを付けることはできない。日本語の場合の図番号を付けている。</figcaption>
         </figure>
         <figure class="fig col-span-2" id="fig-03">
@@ -924,9 +921,9 @@
           </table>
         </figure>
         <p>個別に上詰めをやめるときは、次のように<code>style</code>属性を設定すればよい。</p>
-        <pre class="language-HTML"><code class="language-HTML">&#x3C;figure class="table"
+        <pre class="language-HTML"><code class="language-HTML">&lt;figure class="table"
   id="table-appendix-01"
-  style="float: none;"></code></pre>
+  style="float: none;"&gt;</code></pre>
       </section>
       <section class="level3" aria-labelledby="の見出し">
         <h3 id="の見出し"><code>###</code>の見出し</h3>
@@ -945,5 +942,6 @@
         </section>
       </section>
     </section>
-  </body>
-</html>
+  
+
+</body></html>

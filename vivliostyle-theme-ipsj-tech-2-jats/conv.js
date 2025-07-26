@@ -1,3 +1,4 @@
+import { parseArgs } from 'util';
 import { readFileSync } from 'fs';
 import { JSDOM } from 'jsdom';
 import { IdCheck } from './lib/id.js';
@@ -5,11 +6,15 @@ import { Front } from './lib/front/front.js';
 import { Back } from './lib/back/back.js';
 import { Sec } from './lib/sec.js';
 import { List } from './lib/list.js';
+// import { FnGroup } from './lib/back/fnGroup.js';
 import { Math } from './lib/math.js';
+import { Label } from './lib/label.js';
 import { Figure } from './lib/figure.js';
 import { TableWrap } from './lib/tableWrap.js';
 import { Xref } from './lib/xref.js';
 import { ExtLink } from './lib/extLink.js';
+import { Span } from './lib/span.js';
+import { Blockquote } from './lib/blockquote.js';
 import { Pre } from './lib/pre.js';
 import { Code } from './lib/code.js';
 import serializer from 'w3c-xmlserializer';
@@ -26,7 +31,36 @@ const articleElement = '<article' +
     ' article-type="research-article" xml:lang="ja">\n';
 
 // const inputFile = './example/sample2.html';
-const inputFile = process.argv[2];
+const { values, positionals } = parseArgs({
+    // args: process.argv.slice(2),
+    allowPositionals: true,
+    options: {
+        'raw': {
+            type: 'boolean',
+            short: 'r',
+            description: 'Output the XML without pretty printing',
+            default: false,
+        },
+        'help': {
+            type: 'boolean',
+            short: 'h',
+            description: 'Show this help message',
+            default: false,
+        },
+    }
+});
+// console.warn(`values: ${JSON.stringify(values)}`);
+// console.warn(`positionals: ${JSON.stringify(positionals)}`);
+
+if (values.help) {
+    console.log('Usage: node conv.js [options] <input-file>');
+    console.log('Options:');
+    console.log('  -r, --raw       Output the XML without pretty printing');
+    console.log('  -h, --help      Show this help message');
+    process.exit(0);
+}
+
+const inputFile = positionals[0];
 if (!inputFile) {
     console.error('Usage: node conv.js <input-file>');
     process.exit(1);
@@ -67,9 +101,21 @@ const back = Back(document);
 List(document);
 
 /* ***
+脚注
+*** */
+// FnGroup(document);
+
+/* ***
 数式
 *** */
 Math(document);
+// 数式番号の参照
+Label(document, document,
+    '[specific-use~="equation"][specific-use~="number"]',
+    { ja: '(', en: '(' },
+    { ja: ')', en: ')' },
+    'disp-formula',
+    'beforeend');
 
 /* ***
 図
@@ -86,6 +132,16 @@ TableWrap(document);
 *** */
 Xref(document);
 ExtLink(document);
+
+/* ***
+inline要素
+*** */
+Span(document);
+
+/* ***
+blockquote
+*** */
+Blockquote(document);
 
 /* ***
 pre
@@ -126,11 +182,17 @@ const xmlOutput = xmlDeclaration + doctype + articleElement +
     serializer(jBody) + 
     serializer(jBack) + 
     '</article>';
-console.log(formatXml(xmlOutput, {
-    indentation: '  ',
-    collapseContent: true,
-    lineSeparator: '\n'
-}));
+if (values.raw) {
+    // Output the XML without pretty printing
+    console.log(xmlOutput);
+} else {
+    // Output the XML with pretty printing
+    console.log(formatXml(xmlOutput, {
+        indentation: '  ',
+        collapseContent: true,
+        lineSeparator: '\n'
+    }));
+}
 
 /* ***
 End of script

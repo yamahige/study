@@ -21,20 +21,35 @@ input[type="file"] {
     font-family: 'Courier New', Courier, monospace;
 }
 .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2em;
+    &> div {
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 3;
+    }
+    /* display: flex;
     flex-direction: row;
     column-gap: 2em;
     &> div {
         width: 45%;
-    }
+    } */
 }
-.content {
-    flex-grow: 1;
+.info-contain {
+    text-align: end;
+}
+.content > pre {
 }
 .source {
     display: block;
     white-space: pre-wrap !important;
+    overflow-wrap: anywhere;
     border: 1px solid #ccc;
     padding: 10px;
     background-color: #f9f9f9;
+}
+#rawContent {
+    display: none;
+    white-space: pre;
 }

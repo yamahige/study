@@ -20,6 +20,7 @@ export const Math = (documentParam) => {
             const idHolder = math.closest('.equation.number');
             if (idHolder) {
                 formula.id = idHolder.id;
+                formula.setAttribute('specific-use', 'equation number');
                 idHolder.after(...idHolder.children);
                 idHolder.remove();
             }
@@ -33,13 +34,19 @@ const inline = (math) => {
     // const replace = mathContent.replaceAll(/\\\(/g, '$$$$')
     //     .replaceAll(/\\\)/g, '$$$$');
     const inlineFormula = document.createElement('inline-formula');
-    inlineFormula.textContent = mathContent;
+    const texMath = document.createElement('tex-math');
+    texMath.textContent = mathContent;
+    inlineFormula.appendChild(texMath);
+    // inlineFormula.textContent = mathContent;
     return inlineFormula;
 }
 
 const display = (math) => {
     const mathContent = math.textContent.trim();
     const displayFormula = document.createElement('disp-formula');
-    displayFormula.textContent = mathContent;
+    const texMath = document.createElement('tex-math');
+    texMath.textContent = mathContent;
+    displayFormula.appendChild(texMath);
+    // displayFormula.textContent = mathContent;
     return displayFormula;
 }

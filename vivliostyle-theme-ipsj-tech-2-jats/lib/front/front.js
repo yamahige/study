@@ -7,6 +7,9 @@ import { ContribGroup } from './contribGroup.js';
 import { KwdJa, KwdEn } from './kwd.js';
 import { AbstractEn, AbstractJa } from './abstract.js';
 import { PubDate } from './pubDate.js';
+import { Aff } from "./Aff.js";
+import { Label } from "../label.js";
+import { Email } from './email.js';
 
 export const Front = (document) => {
     const body = document.body;
@@ -43,9 +46,29 @@ export const Front = (document) => {
         const contribGroup = ContribGroup(document);
         articleMeta.appendChild(contribGroup);
 
+        const affAlternatives = Aff(document);
+        if (affAlternatives) articleMeta.append(...affAlternatives);
+        // contrib-groupの範囲で番号を振るために、このタイミングでlabelを追加する
+        Label(document, articleMeta,
+            'aff-alternatives > aff:first-child',
+            { ja: '†', en: '†' },
+            { ja: '', en: '' },
+            'aff-alternatives',
+            'afterbegin');
+
         /* pub date */
         const pubDate = PubDate(document);
         articleMeta.appendChild(pubDate);
+
+        /* email */
+        const emails = Email(document);
+        if (emails.length > 0) {
+            articleMeta.append(...emails);
+        }
+        /* emailセクションを削除 */
+        const emailSec = document.querySelector('.email-heading');
+        console.warn(`emailSec: ${emailSec.textContent}`);
+        if (emailSec) emailSec.parentElement.remove();
 
         /* abstract */
         const absJa = AbstractJa(document);

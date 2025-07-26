@@ -5,6 +5,7 @@
 import { NameJa, NameEn } from "./name.js";
 import { Address } from "./address.js";
 import { XrefAff } from "./xrefAff.js";
+import { XrefEmail } from "./xrefEmail.js";
 
 export const Contrib = (document) => {
     const body = document.body;
@@ -25,23 +26,21 @@ export const Contrib = (document) => {
 
         const nameEn = NameEn(document, authorsEn[index]);
         if (nameEn) contrib.appendChild(nameEn);
-        
-        const address = Address(document, p);
-        if (address) contrib.append(address);
 
         const aff = XrefAff(document, p);
         // console.log(`aff: ${aff}`)
         if (aff) contrib.append(...aff);
 
+        const email = XrefEmail(document, p);
+        if (email) contrib.append(...email);
+
+        // const address = Address(document, p);
+        // if (address) contrib.append(address);
+
         return contrib;
     });
     authorsEnSec?.remove();
     authorsJaSec?.remove();
-
-    /* emailセクションを削除 */
-    const emailSec = document.querySelector('.email-heading');
-    // console.log(`emailSec: ${emailSec}`);
-    if (emailSec) emailSec.parentElement.remove();
 
     return contribs;
 };
