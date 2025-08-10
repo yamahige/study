@@ -10,6 +10,7 @@ import { PubDate } from './pubDate.js';
 import { Aff } from "./Aff.js";
 import { Label } from "../label.js";
 import { Email } from './email.js';
+import { XrefAffPresent } from './xrefAff.js';
 
 export const Front = (document) => {
     const body = document.body;
@@ -51,10 +52,12 @@ export const Front = (document) => {
         // contrib-groupの範囲で番号を振るために、このタイミングでlabelを追加する
         Label(document, articleMeta,
             'aff-alternatives > aff:first-child',
-            { ja: '†', en: '†' },
+            { ja: '', en: '' },
             { ja: '', en: '' },
             'aff-alternatives',
             'afterbegin');
+        // 現所属を示すxrefのテキストを更新
+        XrefAffPresent(articleMeta);
 
         /* pub date */
         const pubDate = PubDate(document);

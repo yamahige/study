@@ -28,9 +28,11 @@ export const TableWrap = (document) => {
             .forEach(table => {
                 tableWrap.appendChild(table);
                 if (table.id) tableWrap.setAttribute('id', table.id);
+                const className = table.className;
                 for (const attr of table.getAttributeNames()) {
                     table.removeAttribute(attr);
                 }
+                if (className) table.setAttribute('specific-use', className);
             });
         figTab.replaceWith(tableWrap);
     });

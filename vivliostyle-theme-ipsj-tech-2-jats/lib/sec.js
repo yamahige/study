@@ -38,6 +38,15 @@ const label = (document) => {
         const subPrefix = `${index + 1}`;
         label.textContent = `${subPrefix}.`;
         title.before(label);
+        const id = title.id;
+        if (id) {
+            // idがある場合は、a要素やxref要素のテキストを更新
+            for (const anchor of document.querySelectorAll(`a[href="#${id}"], xref[rid="${id}"]`)) {
+                anchor.textContent = `${index + 1}章`;
+            }
+        } else {
+            console.warn(`No id found for section label: ${sec.tagName}`);
+        }
         Array.from(sec.children)
             .filter(child => child.matches('sec'))
             .forEach((sec, index) => {
@@ -54,6 +63,15 @@ const subSecLabel = (document, sec, prefix, index) => {
     const subPrefix = `${prefix}.${index + 1}`;
     label.textContent = `${subPrefix}`;
     title.before(label);
+    const id = title.id;
+    if (id) {
+        // idがある場合は、a要素やxref要素のテキストを更新
+        for (const anchor of document.querySelectorAll(`a[href="#${id}"], xref[rid="${id}"]`)) {
+            anchor.textContent = `${subPrefix}節`;
+        }
+    } else {
+        console.warn(`No id found for section label: ${sec.tagName}`);
+    }
     // 再帰的に子セクションのラベルを作成
     Array.from(sec.children)
         .filter(child => child.matches('sec'))

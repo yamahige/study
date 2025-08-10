@@ -24,6 +24,11 @@ export const Xref = (document) => {
                 const xref = document.createElement('xref');
                 xref.setAttribute('ref-type', aClass2XrefMap[className]);
                 xref.setAttribute('rid', a.getAttribute('href').replace('#', ''));
+                const otherClasses = a.classList;
+                otherClasses.remove(className);
+                if (otherClasses.length > 0) {
+                    xref.setAttribute('specific-use', otherClasses.value);
+                }
                 a.after(xref);
                 a.childNodes.forEach((child) => {
                     if (child.nodeType === 1) {

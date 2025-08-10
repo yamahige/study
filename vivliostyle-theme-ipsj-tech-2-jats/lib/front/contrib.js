@@ -2,7 +2,7 @@
 著者
 *** */
 
-import { NameJa, NameEn } from "./name.js";
+import { Name } from "./name.js";
 import { Address } from "./address.js";
 import { XrefAff } from "./xrefAff.js";
 import { XrefEmail } from "./xrefEmail.js";
@@ -21,11 +21,8 @@ export const Contrib = (document) => {
         const contrib = document.createElement('contrib');
         contrib.setAttribute('contrib-type', 'author');
 
-        const nameJa = NameJa(document, p);
-        if (nameJa) contrib.appendChild(nameJa);
-
-        const nameEn = NameEn(document, authorsEn[index]);
-        if (nameEn) contrib.appendChild(nameEn);
+        const nameAlt = Name(document, p, authorsEn[index]);
+        if (nameAlt) contrib.appendChild(nameAlt);
 
         const aff = XrefAff(document, p);
         // console.log(`aff: ${aff}`)

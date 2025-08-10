@@ -18,7 +18,7 @@ export const RefList = (documentParam, back) => {
         h2.before(title);
         const section = h2.parentElement;
         Array.from(section.children)
-            .filter(child => child.matches('.reference'))
+            .filter(child => child.matches(':not(h2).reference'))
             .forEach((ref) => {
                 // console.log(ref);
                 const refItem = document.createElement('ref');

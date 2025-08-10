@@ -2,9 +2,24 @@
 名前
 *** */
 
-let document;
+export const Name = (document, pJa=null, pEn=null) => {
+    let nameAlt = null;
+    const nameJa = pJa ? NameJa(document, pJa) : null;
+    if (nameJa) {
+        nameAlt = document.createElement('name-alternatives');
+        nameAlt.append(nameJa);
+    }
+    const nameEn = pEn ? NameEn(document, pEn) : null;
+    if (nameEn) {
+        if (!nameAlt) {
+            nameAlt = document.createElement('name-alternatives');
+        }
+        nameAlt.appendChild(nameEn);
+    }
+    return nameAlt;
+}
 
-export const NameJa = (document, p) => {
+const NameJa = (document, p) => {
     const name = document.createElement('name');
     name.setAttribute('xml:lang', 'ja');
     name.setAttribute('name-style', 'eastern');
@@ -18,7 +33,7 @@ export const NameJa = (document, p) => {
     return name;
 };
 
-export const NameEn = (document, p) => {
+const NameEn = (document, p) => {
     const nameEn = document.createElement('name');
     nameEn.setAttribute('xml:lang', 'en');
     nameEn.setAttribute('name-style', 'western');

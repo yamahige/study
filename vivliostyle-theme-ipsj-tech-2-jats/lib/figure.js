@@ -17,6 +17,12 @@ export const Figure = (documentParam) => {
         figure.after(fig);
         if (figure.id) fig.id = figure.id; // fig要素にidを設定
 
+        const classList = figure.classList;
+        classList.remove('fig'); // fig要素のclassから'fig'を削除
+        if (classList.length > 0) {
+            addSpecificUse(fig, classList.value); // class属性をspecific-use属性に変換
+        }
+
         const caps = caption(figure);
         fig.append(...caps);
 
@@ -64,7 +70,7 @@ const graphic = (figure) => {
         .forEach(img => {
             const styledContent = styledImg(img);
             const para = document.createElement('p');
-            para.setAttribute('specific-use', 'contents'); // 後の組版でdisplay: contentsを適用するための属性
+            addSpecificUse(para, 'contents'); // 後の組版でdisplay: contentsを適用するための属性
             para.append(styledContent);
             figure.append(para);
         });
@@ -97,7 +103,7 @@ const gp = (img) => {
         graphic.append(altText);
     }
     if (img.hasAttribute('class')) {
-        graphic.setAttribute('specific-use', img.getAttribute('class'));
+        addSpecificUse(graphic, img.getAttribute('class'));
         img.removeAttribute('class'); // imgからclass属性を削除
     }
     // for (const attr of img.getAttributeNames()) {
