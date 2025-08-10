@@ -9,6 +9,7 @@ export const Convert = (document) => {
     img(document);
     math(document);
     xref(document);
+    lang(document);
     // jatsBody(document);
 }
 
@@ -82,6 +83,15 @@ const xref = (document) => {
         if (rid) {
             const href = '#' + rid;
             xref.setAttribute('href', href);
+        }
+    });
+};
+
+const lang = (document) => {
+    document.querySelectorAll('[xml\\:lang]').forEach((element) => {
+        const lang = element.getAttribute('xml:lang');
+        if (lang) {
+            element.setAttribute('lang', lang);
         }
     });
 };
