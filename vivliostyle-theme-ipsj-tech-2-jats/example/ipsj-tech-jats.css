@@ -1,0 +1,1608 @@
+@charset "utf-8";
+:root {
+    counter-reset: section 0 subsection 0 subsubsection 0 subsubsubsection 0 figure 0 table 0 affiliate 0 paffiliate 0 email 0 reference 0 footnote 0 equation 0 appendix 0 appendix-table 0;
+    /* フォント */
+    --serif-font-family: "Times New Roman", "ＭＳ 明朝", "MS Mincho", "游明朝体", "Yu Mincho", YuMincho, "メイリオ", "meiryo", serif;
+    --serif-font-family-en: "Times New Roman", serif;
+    --sans-serif-font-family: "Arial", "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", sans-serif;
+    --sans-serif-font-family-en: "Arial", sans-serif;
+    --heading-font-family: "Times New Roman", var(--sans-serif-font-family);
+    --code-font-family: Menlo, Monaco, SFMono-Regular, Consolas, 'Courier New', monospace;
+    font-family: var(--serif-font-family);
+    font-size: 9pt;
+    hyphens: auto;
+    line-break: strict;
+    --line-height: 1.8;
+    line-height: var(--line-height);
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+    tab-size: 4;
+    text-align: justify;
+    /*
+    */
+    text-spacing: auto;
+    text-spacing-trim: trim-start;
+    text-spacing-trim: trim-both;
+    text-underline-offset: auto;
+    text-underline-position: left;
+    word-break: normal;
+    /*
+    word-break: auto-phrase;
+    */
+    word-spacing: normal;
+    orphans: 1;
+    widows: 1;
+    --spacing-block: calc(var(--line-height) * 1rem);
+    margin-block: 0;
+    --spacing-inline: min(2ch, 5vw);
+}
+
+@media print {
+    :root {
+        column-count: 2;
+        column-gap: 18pt;
+        column-fill: auto;
+    }
+ 
+    @page {
+        size: A4 portrait;
+        margin-block-start: 22mm;
+        margin-block-end: 25mm;
+        margin-inline-start: 17mm;
+        margin-inline-end: 17mm;
+        @top-left {
+            content: string(journal-title) "\A" string(journal-title-en);
+            white-space: pre-line;
+            font-family: var(--serif-font-family);
+            font-size: 1rem;
+        }@top-right {
+            content: "Vol." string(volume) " No." string(issue) "\A" string(pub-date-year) "/" string(pub-date-month) "/" string(pub-date-day);
+            white-space: pre-line;
+            font-family: var(--serif-font-family);
+            font-size: 1rem;
+        }@bottom-left {
+            content: string(copyright-statement);
+            white-space: pre-line;
+            font-family: var(--serif-font-family);
+            font-size: 1rem;
+        }@bottom-right {
+            content: counter(page);
+            white-space: pre-line;
+            font-family: var(--serif-font-family-en);
+            font-size: 1rem;
+        }
+    }
+}
+
+/* ****
+JATS特有
+**** */
+
+journal-meta { /* JATS */
+    display: none;
+}
+journal-title { /* JATS */
+    string-set: journal-title content();
+}
+journal-title-group trans-title { /* JATS */
+    string-set: journal-title-en content();
+}
+
+pub-date > day { /* JATS */
+    string-set: pub-date-day content();
+    display: none;
+}
+pub-date > month { /* JATS */
+    string-set: pub-date-month content();
+    display: none;
+}
+pub-date > year { /* JATS */
+    string-set: pub-date-year content();
+    display: none;
+}
+volume { /* JATS */
+    string-set: volume content();
+    display: none;
+}
+issue { /* JATS */
+    string-set: issue content();
+    display: none;
+}
+fpage, /* JATS */
+lpage { /* JATS */
+    display: none;
+}
+copyright-statement {
+    string-set: copyright-statement content();
+    display: none;
+}
+
+/* ****
+Header
+**** */
+
+header {
+    float: block-start;
+    float-reference: page;
+    margin-block-end: 14mm;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    padding-inline: 15mm;
+}
+title-group, /* JATS */
+abstract, /* JATS */
+trans-abstract, /* JATS */
+kwd-group { /* JATS */
+    float: block-start;
+    float-reference: page;
+    padding-inline: 15mm;
+}
+title-group { /* JATS */
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    text-align: center;
+}
+
+article-title, /* JATS */
+trans-title, /* JATS */
+h1,
+h2.title:lang(en) {
+    font-size: 25Q;
+    text-align: center;
+    word-break: auto-phrase;
+    text-wrap: pretty;
+}
+article-title, /* JATS */
+h1 {
+    margin-block-start: 16mm;
+    margin-block-end: 9mm;
+    font-family: var(--heading-font-family);
+    font-weight: bold;
+}
+article-title { /* JATS */
+    margin-block-end: 0;
+    display: block;
+    text-box: trim-start cap alphabetic;
+}
+article-meta > title-group > trans-title-group > trans-title, /* JATS */
+h2.title:lang(en) {
+    margin-block-start: 12mm;
+    margin-block-end: 4mm;
+    font-family: var(--serif-font-family-en);
+}
+article-meta > title-group > trans-title-group > trans-title { /* JATS */
+    display: block;
+    margin-block-start: 1rem;
+    margin-block-end: .5rem;
+    font-weight: bold;
+}
+
+/* 著者 */
+
+h2.author {
+    display: none;
+}
+:has(> .author) {
+    margin-block-start: 9mm;
+    margin-block-end: 0;
+    text-align: center;
+}
+:has(> .author) > p {
+    display: inline;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    font-family: var(--serif-font-family);
+    font-size: 12pt;
+}
+:has(> .author) > p:not(:first-of-type) {
+    margin-inline-start: 1rem;
+}
+:has(> .author:is(:lang(en))) > p {
+    margin-block: 0;
+    font-family: var(--serif-font-family-en);
+    font-variant-caps: small-caps; /* https://en.wikipedia.org/wiki/Small_caps */
+}
+:has(> .author) .emailref,
+:has(> .author) .affiref,
+:has(> .author) .paffiref {
+    display: inline;
+    font-size: 7pt;
+    position: relative;
+    inset-block-start: -0.5rem;
+}
+
+/* 著者 JATS */
+
+contrib-group { /* JATS */
+    float: block-start;
+    float-reference: page;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-evenly;
+    margin-block-start: 2rem;
+    padding-inline: 15mm;
+}
+contrib[contrib-type="author"] { /* JATS */
+    flex: 1;
+    display: flex block;
+    flex-direction: row;
+    justify-content: center;
+    min-inline-size: 0;
+    inline-size: fit-content;
+    font-family: var(--serif-font-family);
+    font-size: 12pt;
+    text-align: center;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: visible;
+}
+contrib[contrib-type="author"] > name-alternatives { /* JATS */
+    inline-size: min-content;
+    margin: 0;
+    padding: 0;
+    display: flex block;
+    flex-direction: column;
+    align-items: center;
+    /* outline: thin solid green; */
+}
+contrib[contrib-type="author"] > name-alternatives > name { /* JATS */
+    display: block;
+    margin-block: 0;
+    margin-inline: auto;
+}
+contrib[contrib-type="author"] > name-alternatives > name[name-style="western"] { /* JATS */
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 0;
+    gap: 1ex;
+    font-size: 100%;
+}
+contrib[contrib-type="author"] > name-alternatives > name:not(:last-of-type)::after { /* JATS */
+    display: inline;
+    white-space: pre-line;
+}
+contrib[contrib-type="author"][xml\:lang="en"] { /* JATS */
+    font-family: var(--serif-font-family-en);
+}
+contrib[contrib-type="author"] > name-alternatives > name > * { /* JATS */
+    display: inline
+}
+:has(> .author:is(:lang(en))) {
+    margin-block-start: 4mm;
+}
+contrib[contrib-type="author"] > name-alternatives > name[name-style="western"] { /* JATS */
+    margin-block: 0;
+    font-family: var(--serif-font-family-en);
+    font-variant-caps: small-caps;
+}
+contrib[contrib-type="author"] > name-alternatives > name:not(:first-of-type) { /* JATS */
+    margin-block-start: 1em;
+}
+contrib[contrib-type="author"] > name-alternatives > name[name-style="western"] > surname::after { /* JATS */
+    /* content: ", ";
+    white-space: pre-line; */
+}
+contrib[contrib-type="author"] > xref { /* JATS */
+    display: inline;
+    font-size: 7pt;
+    position: relative;
+    inset-block-start: -0.5rem;
+}
+contrib[contrib-type="author"] > xref:not(:first-of-type) {
+    margin-inline-start: .2em;
+}
+
+/* Email */
+
+:has(> .email-heading) {
+    float: block-end;
+    float-reference: column;
+    padding-block-start: 0;
+    text-align: start;
+    --email-padding-inline: 2em;
+    padding-inline-start: var(--email-padding-inline);
+}
+h2.email-heading {
+    display: none;
+}
+
+.email {
+    counter-increment: email;
+    display: flow-root;
+    text-indent: 0;
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: 1.2;
+}
+.email::before {
+    content: counter(email, lower-alpha) ")";
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--email-padding-inline));
+    min-inline-size: var(--email-padding-inline);
+    font-size: 7pt;
+}
+email { /* JATS */
+    counter-increment: email;
+    display: block;
+    float: block-end;
+    float-reference: column;
+    margin-inline: 0;
+    --email-padding-inline: 2em;
+    padding-inline-start: var(--email-padding-inline);
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: 1.2;
+}
+email::before { /* JATS */
+    content: counter(email, lower-alpha) ")";
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--email-padding-inline));
+    min-inline-size: var(--email-padding-inline);
+    font-size: 7pt;
+}
+contrib > address { /* JATS */
+    /* addressはcontrib内にnameと並んで位置する。 */
+    /* contribはfloat: block-start;と設定している。*/
+    /* これだけを外に出してfloat: block-end;配置できない */
+    /* float: block-end; */
+    /* float-reference: column; */
+    display: block;
+    margin-inline: 0;
+    font-size: 1rem;
+    font-style: normal;
+    font-family: var(--serif-font-family-en)
+}
+contrib > address::before { /* JATS */
+    /* content: "\A";
+    display: inline;
+    white-space: pre-line; 改行を有効にする */
+}
+
+/* 所属 */
+
+:has(> .affiliate-heading) {
+    float: block-end;
+    float-reference: column;
+    border-block-start: 1px solid black;
+    padding-block-start: 0.5rem;
+    --affiliate-padding-inline: 2em;
+    padding-inline-start: var(--affiliate-padding-inline);
+}
+
+h2.affiliate-heading {
+    display: none;
+}
+
+aff-alternatives { /* JATS */
+    display: block;
+    inline-size: fit-content;
+    margin-block-start: 0;
+    margin-inline: auto;
+    float: block-end;
+    float-reference: column;
+    /* outline: thin solid red; */
+    --affiliate-padding-inline: 2em;
+    padding-inline-start: var(--affiliate-padding-inline);
+}
+aff-alternatives:first-of-type { /* JATS */
+    border-block-start: 1px solid black;
+    padding-block-start: 0.5rem;
+}
+aff { /* JATS */
+    display: block;
+    margin-inline: 0;
+    padding: 0;
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: 1.5;
+    /* border: thin solid green; */
+}
+aff[xml\:lang="en"] { /* JATS */
+    font-family: var(--serif-font-family-en);
+}
+
+aff-alternatives, /* JATS */
+.paffiliate,
+.affiliate {
+    display: flow-root;
+    text-indent: 0;
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: 1.2;
+}
+.affiliate {
+    counter-increment: affiliate;
+}
+.paffiliate {
+    counter-increment: paffiliate;
+}
+.affiliate::before {
+    content: counter(affiliate);
+}
+.paffiliate::before {
+    content: "†" counter(paffiliate);
+}
+.paffiliate > :not(:lang(en))::before {
+    content: "現在，";
+}
+.paffiliate > :lang(en) {
+    display: block;
+}
+.paffiliate > :lang(en)::before {
+    content: "Presently with ";
+}
+aff:first-of-type > label, /* JATS */
+.affiliate::before,
+.paffiliate::before {
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--affiliate-padding-inline));
+    min-inline-size: var(--affiliate-padding-inline);
+    font-size: 7pt;
+}
+
+/* ****
+概要とキーワード
+**** */
+
+h2.abstract::before,
+h2.keyword::before {
+    content: "";
+    display: block;
+    margin-block: 0;
+    margin-inline: 0;
+    padding: 0;
+}
+
+h2.abstract,
+h2.keyword {
+    display: inline;
+    text-indent: 0;
+    margin-inline: 0;
+    padding: 0;
+    font-size: 8pt;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+h2.abstract,
+h2.keyword {
+    line-height: 1.5;
+}
+h2.abstract:lang(en),
+h2.keyword:lang(en) {
+    font-style: oblique;
+    font-family: var(--serif-font-family-en);
+    line-height: 1.3;
+}
+h2.abstract + p,
+h2.keyword + p {
+    display: inline;
+}
+h2.abstract:lang(en) + p,
+h2.keyword:lang(en) + p {
+    font-family: var(--serif-font-family-en);
+}
+h2.abstract + p::after,
+h2.keyword + p::after {
+    content: "";
+    display: block;
+    margin-block: 0;
+    margin-inline: 0;
+    padding: 0;
+}
+section:has(> h2.abstract),
+section:has(> h2.keyword) {
+    font-size: 8pt;
+    margin-inline-start: 0;
+    font-family: var(--serif-font-family);
+    line-height: 1.5;
+}
+section:has(> h2.abstract) {
+    margin-block-start: 13mm;
+}
+section:has(> h2.keyword) {
+    margin-block-start: 1em;
+}
+
+section:has(> h2.abstract:lang(en)),
+section:has(> h2.abstract:lang(en)) > *,
+section:has(> h2.keyword:lang(en)) > * {
+    font-family: var(--serif-font-family-en);
+    line-height: 1.3;
+}
+section:has(> h2.abstract:lang(en)) {
+    margin-block-start: 2em;
+}
+
+/* JATS 概要 */
+
+abstract, /* JATS */
+trans-abstract { /* JATS */
+    display: block;
+    margin-block-start: 2rem;
+    margin-block-end: 0;
+    font-size: 8pt;
+}
+abstract { /* JATS */
+    line-height: 1.5;
+}
+trans-abstract { /* JATS */
+    line-height: 1.3;
+}
+abstract > label, /* JATS */
+trans-abstract > label { /* JATS */
+    display: inline;
+    text-indent: 0;
+    margin-inline-start: 0;
+    margin-inline-end: .5em;
+    padding: 0;
+    font-weight: bold;
+}
+abstract > label { /* JATS */
+    font-family: var(--sans-serif-font-family);
+}
+trans-abstract > label { /* JATS */
+    font-family: var(--serif-font-family-en);
+    font-style: oblique;
+}
+abstract > label + p, /* JATS */
+trans-abstract > label + p { /* JATS */
+    display: inline;
+}
+abstract > label + p::after, /* JATS */
+trans-abstract > label + p::after { /* JATS */
+    content: "";
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+abstract > p { /* JATS */
+    margin-inline: 0;
+}
+trans-abstract > p { /* JATS */
+    font-family: var(--serif-font-family-en);
+    line-height: 1.3;
+}
+
+/* JATS キーワード */
+
+kwd-group { /* JATS */
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-size: 8pt;
+}
+kwd-group:first-of-type { /* JATS */
+    margin-block-start: 1rem;
+}
+kwd-group::before { /* JATS */
+    display: inline-block;
+    margin-block: 0;
+    margin-inline: 0;
+    padding: 0;
+}
+kwd-group[xml\:lang="ja"]::before { /* JATS */
+    content: "キーワード:\A0";
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+kwd-group[xml\:lang="en"]::before { /* JATS */
+    content: "Keywords:\A0";
+    font-family: var(--serif-font-family-en);
+    font-weight: bold;
+    font-style: oblique;
+}
+kwd-group[xml\:lang="en"] { /* JATS */
+    margin-block-end: 2rem;
+}
+kwd:not(:first-of-type)::before { /* JATS */
+    content: ", ";
+    font-family: var(--serif-font-family-en);
+}
+
+/* ****
+div相当のp JATS
+styled-contentを使うための、DTD構造上のエスケープ
+**** */
+
+p[specific-use~="contents"] { /* JATS */
+    display: contents;
+}
+
+/* ***
+図、表
+*** */
+
+fig styled-content { /* JATS */
+    display: inline-block;
+}
+
+figure {
+    margin-block-start: 0;
+    margin-block-end: var(--spacing-block);
+    margin-inline: 2rem;
+    float: block-start;
+    float-reference: column;
+}
+fig-group, /* JATS */
+fig { /* JATS */
+    display: block;
+    margin-block-start: var(--spacing-block);
+    margin-block-end: 0;
+    float: block-start;
+    float-reference: column;
+    break-inside: avoid;
+}
+fig-group { /* JATS */
+    margin-inline: 0;
+}
+fig { /* JATS */
+    margin-inline: 2rem;
+}
+fig[specific-use~="col-span-2"] { /* JATS */
+    display: block;
+    max-inline-size: 100vw;
+    margin-block-start: 0;
+    margin-block-end: var(--spacing-block);
+    margin-inline: 2rem;
+    float: block-start;
+    float-reference: page;
+}
+figure.col-span-2,
+figure:has(> img.col-span-2) {
+    float: block-start;
+    float-reference: page;
+}
+fig > jats-title-wrap, /* JATS */
+fig > p[content-type="title"][xml\:lang="en"], /* JATS */
+table-wrap > jats-title-wrap, /* JATS */
+table-wrap > p[content-type="title"][xml\:lang="en"], /* JATS */
+figcaption {
+    margin-block: calc(var(--spacing-block) * 0.5);
+    margin-inline: 1rem;
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    text-align: justify;
+    line-height: 1.5;
+}
+fig > jats-title-wrap > jats-title { /* JATS */
+    display: inline;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-family: var(--serif-font-family);
+    font-weight: normal;
+}
+fig > p[content-type="title"][xml\:lang="en"], /* JATS */
+fig > jats-title-wrap { /* JATS */
+    display: block;
+    margin-block-end: 0;
+    text-align: start;
+    text-indent: 0;
+}
+fig > p[content-type="title"][xml\:lang="en"], /* JATS */
+figcaption :lang(en) {
+    font-family: var(--serif-font-family-en);
+}
+fig > p[content-type="title"][xml\:lang="en"] { /* JATS */
+    margin-block-start: 0;
+    margin-block-end: .5rem;
+}
+fig > p[content-type="title"][xml\:lang="en"] > [content-type="label"], /* JATS */
+label { /* JATS */
+    display: inline;
+    margin-inline-start: 0;
+    margin-inline-end: .5rem;
+    padding-inline: 0;
+    font-family: var(--sans-serif-font-family);
+    text-indent: 0;
+    /* outline: thin solid black; */
+}
+fig > p[content-type="title"][xml\:lang="en"] > [content-type="label"] { /* JATS */
+    font-weight: bold;
+}
+
+fig-group[specific-use~="minipage"], /* JATS */
+.minipage {
+    display: flex;
+    float: block-start;
+    float-reference: column;
+    flex-direction: row;
+    align-items: flex-start; /* 上に揃える */
+    justify-content: space-evenly;
+}
+fig-group[specific-use~="minipage"] > *, /* JATS */
+.minipage > * {
+    /* 各内容に同じ幅を与える */
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    margin-block: 0;
+    /*
+    outline: thin solid royalblue;
+    */
+}
+
+figure.normal-flow,
+.minipage.normal-flow {
+    float: none;
+    margin-block: var(--spacing-block);
+}
+fig[specific-use~="normal-flow"], /* JATS */
+fig-group[specific-use~="normal-flow"] { /* JATS */
+    float: none;
+}
+
+figure.breakable,
+figure.fig.breakable {
+    break-inside: auto;
+}
+
+/* ****
+図
+**** */
+
+fig, /* JATS */
+figure.fig,
+figure:has(> img.fig) {
+    counter-increment: figure;
+    break-inside: avoid;
+}
+fig > jats-title-wrap, /* JATS */
+figure:has(> img.fig) figcaption,
+figure.fig figcaption {
+    margin-block-start: calc(var(--spacing-block) * 0.5);
+    margin-block-end: 0;
+}
+figure:has(> img.fig) figcaption::before,
+figure.fig figcaption > :not(:lang(en))::before {
+    content: "図" counter(figure);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+fig > jats-title-wrap > label { /* JATS */
+    display: inline;
+    margin-inline-end: 1rem;
+    font-family: var(--serif-font-family);
+    font-weight: bold;
+}
+figure:has(> img.fig:lang(en)) figcaption::before,
+figure.fig figcaption > :is(:lang(en))::before {
+    content: "Fig. " counter(figure);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+figure blockquote {
+    margin-inline: var(--spacing-inline);
+}
+
+/* ****
+表
+**** */
+
+table-wrap { /* JATS */
+    counter-increment: table;
+    display: block;
+    margin-block-start: var(--spacing-block);
+    margin-inline-start: auto; /* 中央揃え */
+    margin-inline-end: auto; /* 中央揃え */
+    float: block-start;
+    float-reference: column;
+}
+figure.table {
+    counter-increment: table;
+    margin-inline: 0;
+    float: block-start;
+    float-reference: column;
+}
+table {
+    border-collapse: collapse;
+    margin-inline-start: auto; /* 中央揃え */
+    margin-inline-end: auto; /* 中央揃え */
+}
+td {
+    font-family: var(--serif-font-family);
+}
+table-wrap table, /* JATS */
+figure.table table {
+    width: auto;
+}
+table-wrap > table { /* JATS */
+    margin-block-start: 1rem;
+}
+table-wrap > jats-title-wrap > jats-title, /* JATS */
+figure.table figcaption,
+caption {
+    caption-side: top;
+    margin-block-start: 0;
+    margin-block-end: calc(var(--spacing-block) * 0.5);
+    font-weight: normal;
+}
+table-wrap > jats-title-wrap > jats-title { /* JATS */
+    font-family: var(--serif-font-family);
+}
+figure.table figcaption > :not(:lang(en))::before,
+table caption:not(:has(> span))::before,
+table caption span:not(:lang(en))::before {
+    content: "表" counter(table);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+table-wrap > jats-title-wrap > label { /* JATS */
+    display: inline;
+    margin-inline-end: 1rem;
+    font-family: var(--serif-font-family);
+    font-weight: bold;
+}
+figure.table figcaption span,
+table caption span:is(:lang(en)) {
+    display: block;
+}
+table-wrap > jats-title-wrap, /* JATS */
+table-wrap > p[content-type="title"][xml\:lang="en"] { /* JATS */
+    display: block;
+    break-inside: avoid;
+    break-after: avoid;
+    margin-block: 0;
+    text-indent: 0;
+    font-family: var(--serif-font-family-en);
+    font-weight: normal;
+    text-align: start;
+}
+figure.table figcaption > :is(:lang(en))::before,
+table caption > :is(:lang(en))::before {
+    content: "Table " counter(table);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+table-wrap > p[content-type="title"][xml\:lang="en"] > [content-type="label"] { /* JATS */
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+
+table th,
+table td {
+    padding-inline: .5rem;
+    padding-block: .2rem;
+    border: none;
+}
+th,
+td {
+    font-size: 85%;
+    white-space: pre-line;
+    vertical-align: top;
+}
+
+/* 表の罫線とセルの揃えのCSSは別ファイル */
+
+/* ****
+参照
+**** */
+
+a.affiref::before {
+    content: target-counter(attr(href url), affiliate);
+    font-family: var(--serif-font-family-en);
+}
+xref::before { /* JATS */
+    font-family: var(--serif-font-family-en);
+}
+xref:not(:last-of-type)::after { /* JATS */
+    content: ",";
+}
+a.affiref:not(:first-of-type)::before {
+    content: "," target-counter(attr(href url), affiliate);
+}
+a.paffiref::before {
+    content: "†" target-counter(attr(href url), paffiliate);
+    font-family: var(--serif-font-family-en);
+}
+a.paffiref:not(:first-of-type)::before {
+    content: ",†" target-counter(attr(href url), paffiliate);
+}
+xref[ref-type="other"][specific-use="email"]::before { /* JATS */
+    content: target-counter( attr(href url), email, lower-alpha) ")";
+}
+a.emailref::before {
+    content: target-counter(attr(href url), email, lower-alpha) ")";
+    font-family: var(--serif-font-family-en);
+    font-variant-caps: normal;
+}
+a.emailref:not(:first-of-type)::before {
+    content: "," target-counter(attr(href url), email, lower-alpha) ")";
+}
+xref[ref-type="disp-formula"]::before { /* JATS */
+    /* content: "(" target-counter(attr(href url), equation) ")"; */
+    font-family: var(--serif-font-family-en);
+}
+a.eqref::before {
+    content: "(" target-counter(attr(href url), equation) ")";
+    font-family: var(--serif-font-family-en);
+}
+xref[ref-type="bibr"] { /* JATS */
+    /* content: "[" target-counter(attr(href url), reference) "]"; */
+    /* content: "[" (attr(rid), reference) "]"; */
+    font-family: var(--serif-font-family-en);
+    /* color: crimson; */
+}
+a.cite::before {
+    content: "[" target-counter(attr(href url), reference) "]";
+    font-family: var(--serif-font-family-en);
+}
+.figref::before {
+    content: "図" target-counter(attr(href url), figure);
+    font-family: var(--serif-font-family);
+}
+.tabref::before {
+    content: "表" target-counter(attr(href url), table);
+    font-family: var(--serif-font-family);
+}
+a.secref::before {
+    content: "" target-counter(attr(href url), section) "章";
+    font-family: var(--serif-font-family);
+}
+a.subsecref::before {
+    content: "" target-counter(attr(href url), section) "." target-counter(attr(href url), subsection) "節";
+    font-family: var(--serif-font-family);
+}
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+a:link {
+    color: black;
+}
+a:visited {
+    color: black;
+}
+a:hover {
+    color: black;
+}
+a.affiref::before,
+a.paffiref::before,
+a.emailref::before,
+a.eqref::before,
+a.cite::before,
+a.figref::before,
+a.tabref::before,
+a.secref::before,
+a.subsecref::before {
+    font-size: 9pt;
+}
+
+/* 最初に登場する参照は太字にする */
+xref[specific-use~="first-ref"], /* JATS */
+.tabref.first-ref::before,
+.figref.first-ref::before {
+    font-weight: bold;
+    color: crimson;
+}
+
+/* ****
+段落
+**** */
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    text-indent: 1rem;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: var(--line-height);
+}
+
+/* ****
+2段組
+**** */
+
+section > * {
+    margin-break: discard;
+}
+
+/* ****
+見出し
+**** */
+
+sec > jats-title-wrap { /* JATS */
+    display: block;
+    margin-block: calc(var(--spacing-block) * 0.5);
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+jats-title-wrap > label, /* JATS */
+jats-title-wrap > jats-title { /* JATS */
+    display: inline;
+    margin-block: 0;
+    margin-inline-start: 0;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+h2 > label { /* JATS */
+    margin-inline-end: 1rem;
+}
+jats-title-wrap > label { /* JATS */
+    margin-inline-end: .5rem;
+}
+jats-title-wrap > jats-title { /* JATS */
+    margin-inline-end: 0;
+}
+
+app-group > jats-title, /* JATS */
+fn-group > jats-title, /* JATS */
+h2 {
+    display: block;
+    margin-block: calc(var(--spacing-block) * 0.5);
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+    font-size: 11pt;
+    text-align: start;
+    break-after: avoid;
+}
+h2 {
+    counter-reset: subsection 0;
+}
+h2:not(.title, .author, .affiliate-heading, .email-heading, .abstract, .keyword, .acknowledgement, .reference, .appendix) {
+    counter-increment: section;
+}
+h2:not(.title, .author, .affiliate-heading, .email-heading, .abstract, .keyword, .acknowledgement, .reference, .appendix)::before {
+    content: counter(section) ".";
+    margin-inline-end: 1rem;
+}
+jats-body > sec > h2::before { /* JATS */
+    content: none !important;
+}
+app > jats-title, /* JATS */
+jats-body > sec > sec > jats-title-wrap, /* JATS */
+h3 {
+    margin-block-start: calc(var(--spacing-block) * 0.5);
+    margin-block-end: 0;
+    break-after: avoid;
+}
+:not(jats-body, app) > sec > jats-title-wrap, /* JATS */
+h3, h4, h5, h6 {
+    font-family: var(--sans-serif-font-family);
+    font-size: 9pt;
+    break-after: avoid;
+}
+:not(jats-body, app) > sec > jats-title-wrap { /* JATS */
+    display: block;
+    margin-block: calc(var(--spacing-block) * 0.5);
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+h3 {
+    counter-increment: subsection;
+    counter-reset: subsubsection;
+}
+h3::before {
+    content: counter(section) "." counter(subsection);
+    margin-inline-end: 1em;
+}
+:not(jats-body) > sec > jats-title-wrap, /* JATS */
+h4, h5, h6 {
+    margin-block: 0;
+}
+
+h4 {
+    counter-increment: subsubsection;
+    counter-reset: subsubsubsection;
+  }
+h4::before {
+    content: counter(section) "." counter(subsection) "." counter(subsubsection);
+    margin-inline-end: 1em;
+}
+
+jats-body > sec > sec > sec > sec > jats-title-wrap, /* JATS */
+/* h5はrun-in。h6もrun-inにしておく。 */
+h5,
+h6 {
+    display: inline;
+    margin-inline-end: 1rem;
+  }
+h5 {
+    counter-increment: subsubsubsection;
+}
+jats-body > sec > sec > sec > sec > jats-title-wrap::before, /* JATS */
+h5::before,
+h6::before {
+    content: "";
+    display: block;
+    margin-block: 0;
+}
+jats-body > sec > sec > sec > sec > jats-title-wrap + p, /* JATS */
+h5 + p,
+h6 + p {
+    display: inline;
+}
+jats-body > sec > sec > sec > sec > jats-title-wrap + p::after, /* JATS */
+h5 + p::after,
+h6 + p::after {
+    content: "";
+    display: block;
+    margin-block: 0;
+}
+jats-body > sec > sec > sec > sec > jats-title-wrap > label { /* JATS */
+    display: none;
+}
+
+/* ****
+付録
+**** */
+
+app-group, /* JATS */
+section:has(> h2.appendix) {
+    counter-reset: figure 0 table 0;
+}
+app-group > jats-title, /* JATS */
+h2.appendix {
+    break-after: avoid;
+    letter-spacing: 4rem;
+}
+
+app > jats-title { /* JATS */
+    counter-increment: subsection 1;
+    display: block;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+    text-align: start;
+}
+app > jats-title, /* JATS */
+section:has(> h2.appendix) h3 {
+    margin-block: calc(var(--spacing-block) * 0.5);
+    font-size: 11pt;
+}
+app > jats-title::before, /* JATS */
+section:has(> h2.appendix) h3::before {
+    content: "A." counter(subsection);
+    margin-inline-end: 1rem;
+}
+app > sec > jats-title { /* JATS */
+    counter-increment: subsubsection 1;
+    display: block;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+app > sec > jats-title, /* JATS */
+section:has(> h2.appendix) h4 {
+    margin-block: calc(var(--spacing-block) * 0.5);
+}
+app > sec > jats-title::before, /* JATS */
+section:has(> h2.appendix) h4::before {
+    content: "A." counter(subsection) "." counter(subsubsection);
+    margin-inline-end: 1rem;
+}
+app > sec > sec > jats-title, /* JATS */
+section:has(> h2.appendix) h5 {
+    display: block; /* run-inにしない */
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+app > sec > sec > jats-title::before, /* JATS */
+section:has(> h2.appendix) h5::before {
+    content: "A." counter(subsection) "." counter(subsubsection) "." counter(subsubsubsection);
+    display: inline;
+    margin-inline-end: 1rem;
+}
+app > sec > sec > jats-title + p, /* JATS */
+section:has(> h2.appendix) h5 + p {
+    display: block;
+}
+app > sec > sec > jats-title + p::after, /* JATS */
+section:has(> h2.appendix) h5 + p::before {
+    content: none;
+    display: inline;
+}
+app > sec > sec > sec > jats-title { /* JATS */
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+
+section:has(> h2.appendix) figure.table figcaption > :not(:lang(en))::before {
+    content: "表A." counter(table);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+section:has(> h2.appendix) figure.table figcaption > :is(:lang(en))::before {
+    content: "Table A." counter(table);
+    margin-inline-end: 1rem;
+    font-weight: bold;
+}
+
+/* ****
+箇条書き
+**** */
+
+list { /* JATS */
+    display: block;
+    margin-block: 1rem;
+    font-size: 100%;
+    line-height: 1.5;
+    --ol-padding-inline: 2.5rem;
+    --ul-padding-inline: 1.5rem;
+    padding-inline-start: var(--ol-padding-inline);
+}
+list[list-type="bullet"] { /* JATS */
+    padding-inline-start: var(--ul-padding-inline);
+}
+list:not([list-type="bullet"]) { /* JATS */
+    padding-inline-start: var(--ol-padding-inline);
+}
+list > list-item { /* JATS */
+    display: flow-root;
+}
+list > list-item > label { /* JATS */
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    text-align: start;
+    font-family: var(--serif-font-family-en);
+}
+list[list-type="bullet"] > list-item > label { /* JATS */
+    min-inline-size: var(--ul-padding-inline);
+    margin-inline-end: 0;
+    margin-inline-start: calc(-1 * var(--ul-padding-inline));
+}
+list:not([list-type="bullet"]) > list-item > label { /* JATS */
+    min-inline-size: var(--ol-padding-inline);
+    margin-inline-end: 0;
+    margin-inline-start: calc(-1 * var(--ol-padding-inline));
+}
+list-item p { /* JATS */
+    text-indent: 0;
+}
+
+ul,
+ol {
+    margin-block: 0;
+    font-size: 100%;
+    line-height: 1.5;
+}
+
+ol {
+    list-style-type: none;
+    counter-reset: list-item-kakko 0;
+    --ol-padding-inline: 1.8em;
+    padding-inline-start: var(--ol-padding-inline);
+}
+ol li {
+    counter-increment: list-item-kakko;
+    display: flow-root;
+}
+ol li::before {
+    content: "（" counter(list-item-kakko) "）";
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--ol-padding-inline));
+    min-inline-size: var(--ol-padding-inline);
+    text-align: start;
+    font-family: var(--serif-font-family-en);
+}
+
+ul {
+    list-style-type: none;
+    --ul-padding-inline: 1em;
+    padding-inline-start: var(--ul-padding-inline);
+}
+ul li {
+    display: flow-root;
+}
+ul li::before {
+    content: "\25CF";
+    float: left;
+    break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--ul-padding-inline));
+    min-inline-size: var(--ul-padding-inline);
+    text-align: start;
+    font-family: var(--serif-font-family);
+}
+
+
+a.url {
+    font-family: var(--code-font-family);
+}
+img {
+    max-width: 100%;
+    min-width: 0; /* JATS */
+}
+embed {
+    object-fit: scale-down;
+}
+alt-text { /* JATS, img > alt-textでは効かない */
+    display: none;
+}
+
+/* ****
+引用
+**** */
+
+blockquote {
+    margin-block: var(--spacing-block);
+    margin-inline: 0;
+    padding-inline-start: var(--spacing-inline);
+    text-indent: 0;
+    text-align: justify;
+    border-inline-start: thin solid darkgrey;
+}
+blockquote > p {
+    text-indent: 0;
+    font-size: 90%;
+}
+
+/* ***
+数式
+*** */
+
+disp-formula[specific-use~="equation"][specific-use~="number"], /* JATS */
+.equation.number {
+    counter-increment: equation;
+    display: grid;
+    grid-template-columns: auto 3rem;
+    break-inside: avoid;
+    align-content: center;
+    align-items: center;
+    text-align: start;
+}
+.equation.number::after {
+    content: "(" counter(equation) ")";
+    text-align: end;
+}
+
+/* ***
+脚注
+*** */
+
+/* ページ脚注 */
+
+.footnotetext {
+    counter-increment: footnote;
+    float: footnote;
+}
+::footnote-marker {
+    content: "*" counter(footnote) " ";
+}
+::footnote-call {
+    content: "*" counter(footnote);
+    font-size: 8pt;
+    position: relative;
+    inset-block-start: -0.5rem;
+}
+
+/* 段脚注 */
+
+.fn-text {
+    counter-increment: footnote;
+    display: block;
+    line-height: 1.5;
+    /*
+    outline: thin solid green;
+    */
+    padding-inline-start: 2rem;
+    text-indent: -2rem;
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+}
+.fn-text::before {
+    content: "*" counter(footnote);
+    display: inline;
+    width: 2rem;
+    text-align: start;
+    padding: 0;
+    margin-inline-end: 1rem;
+    /*
+    outline: thin solid blue;
+    */
+}
+.fn-area {
+    float: block-end;
+    float-reference: column;
+    border-block-start: thin solid currentcolor;
+    /*
+    outline: thin solid orangered;
+    */
+}
+.fn-call::before {
+    content: "*" target-counter(attr(href url), footnote);
+    font-size: .7rem;
+    position: relative;
+    inset-block-start: -0.5rem;
+}
+
+/* 文末脚注 JATS */
+
+fn-group { /* JATS */
+    display: block;
+    margin-block-start: 1rem;
+    margin-block-end: 0;
+    padding-inline: 0;
+    text-align: start;
+    --fn-padding-inline: 2rem;
+}
+fn { /* JATS */
+    display: flow-root;
+    margin-block: 0;
+    padding-inline-start: var(--fn-padding-inline);
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: 1.5;
+}
+fn > label { /* JATS */
+    display: inline;
+    float: left;
+    margin-inline-start: calc(-1 * var(--fn-padding-inline));
+    font-family: var(--sans-serif-font-family);
+    break-after: avoid;
+}
+fn > p { /* JATS */
+    display: inline;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+}
+xref[ref-type="fn"] { /* JATS */
+    /* content: "*" target-counter(attr(href url), footnote); */
+    /* content: attr(rid); */
+    font-size: .7rem;
+    position: relative;
+    inset-block-start: -0.5rem;
+    /* color: crimson デバッグ用; */
+}
+
+/* ***
+謝辞
+*** */
+
+ack { /* JATS */
+    display: block;
+    margin-block: var(--spacing-block);
+    margin-inline-start: 0;
+}
+ack jats-title, /* JATS */
+ack jats-title + p { /* JATS */
+    display: inline;
+    font-size: 9pt;
+}
+ack jats-title { /* JATS */
+    margin-inline-end: 1rem;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+}
+ack jats-title + p {
+    margin-block: 0;
+    font-family: var(--serif-font-family);
+}
+h2.acknowledgement {
+    display: inline-block;
+    margin-inline-end: 1rem;
+    margin-block-end: 0;
+    text-indent: 1rem;
+    font-size: 9pt;
+}
+h2.acknowledgement + p {
+    display: inline;
+}
+
+/* ***
+preformat, code
+*** */
+
+p[content-type="preformat"], /* JATS */
+preformat, /* JATS */
+code {
+    font-family: var(--code-font-family)
+}
+p[content-type="preformat"], /* JATS */
+preformat { /* JATS */
+    /* preformatは段落のように扱う。 */
+    /* 元々のHTMLではpreがcodeとセットで、必ず<pre><code>…</code></pre>のようになってる想定 */
+    display: block;
+    text-indent: 0;
+    text-align: start;
+    white-space: pre; /* 改行を有効にする */
+    margin-block: 1rem;
+    margin-inline: 0;
+}
+code {
+    display: inline;
+}
+
+/* ***
+参考文献
+*** */
+
+ref-list, /* JATS */
+section:has(> h2.reference) {
+    --ref-padding-inline: 2em;
+    padding-inline-start: var(--ref-padding-inline);
+}
+ref-list { /* JATS */
+    display: block;
+    margin-block-start: var(--spacing-block);
+}
+h2.reference {
+    font-size: 10.5pt;
+}
+ref-list::before { /* JATS */
+    content: "参考文献";
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: var(--spacing-block);
+    /* margin-inline-start: calc(-1 * var(--ref-padding-inline)); */
+    margin-inline-end: 0;
+    padding: 0;
+    padding-block: 0;
+    font-family: var(--sans-serif-font-family);
+    font-weight: bold;
+    font-size: 10.5pt;
+    text-box: trim-start cap alphabetic;
+}
+ref, /* JATS */
+div.reference {
+    counter-increment: reference;
+    display: flow-root;
+    margin-block: 0;
+    break-inside: avoid; /* 文献全体が別段や別ページに別れないように */
+    font-family: var(--serif-font-family);
+    font-size: 8pt;
+    line-height: var(--line-height);
+}
+ref { /* JATS */
+    text-align: start;
+}
+ref mixed-citation article-title { /* JATS */
+    display: none;
+}
+ref mixed-citation, /* JATS */
+ref mixed-citation > comment { /* JATS */
+    display: inline;
+    margin-inline: 0;
+    padding: 0;
+}
+ref > label, /* JATS */
+div.reference::before {
+    content: "[" counter(reference) "]";
+    float: left;
+    margin-block: 0;
+    margin-inline-end: 0;
+    padding: 0;
+    margin-inline-start: calc(-1 * var(--ref-padding-inline));
+    min-inline-size: var(--ref-padding-inline);
+    font-family: var(--serif-font-family-en);
+    font-size: 8pt;
+}
+
+.book-title:is(:lang(en)) {
+    font-style: italic;
+}
+
+div.reference .url {
+    font-family: var(--code-font-family);
+    white-space: pre-line;
+}
+div.reference .url::before {
+    content: "\A⟨";
+}
+div.reference .url::after {
+    content: "⟩";
+}
+
+/* ***
+End of script
+*** */
