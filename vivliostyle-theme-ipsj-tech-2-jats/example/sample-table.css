@@ -4,12 +4,12 @@
 
 table thead th,
 table thead td {
-    border-block-start: 1px solid;
-    border-block-end: 2px double;
+    border-top: 1px solid;
+    border-bottom: 2px double;
 }
 table tbody tr:last-child th,
 table tbody tr:last-child td {
-    border-block-end: 1px solid;
+    border-bottom: 1px solid;
 }
 
 table.col-align-lrlr tr > td:nth-child(1),

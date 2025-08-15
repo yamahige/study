@@ -1,5 +1,5 @@
-@charset "utf-8";
 :root {
+    word-break: break-word;
     counter-reset: section 0 subsection 0 subsubsection 0 subsubsubsection 0 figure 0 table 0 affiliate 0 paffiliate 0 email 0 reference 0 footnote 0 equation 0 appendix 0 appendix-table 0;
     /* フォント */
     --serif-font-family: "Times New Roman", "ＭＳ 明朝", "MS Mincho", "游明朝体", "Yu Mincho", YuMincho, "メイリオ", "meiryo", serif;
@@ -9,6 +9,7 @@
     --heading-font-family: "Times New Roman", var(--sans-serif-font-family);
     --code-font-family: Menlo, Monaco, SFMono-Regular, Consolas, 'Courier New', monospace;
     font-family: var(--serif-font-family);
+    font-size: 9pt;
     hyphens: auto;
     line-break: strict;
     --line-height: 1.8;
@@ -18,14 +19,9 @@
     tab-size: 4;
     text-align: justify;
     text-spacing: auto;
-    text-spacing-trim: trim-start;
-    text-spacing-trim: both;
     text-underline-offset: auto;
     text-underline-position: left;
     word-break: normal;
-    /*
-    word-break: auto-phrase;
-    */
     word-spacing: normal;
     orphans: 1;
     widows: 1;
@@ -34,21 +30,39 @@
     --spacing-inline: min(2ch, 5vw);
 }
 
+@media print {
+    :root {
+        column-count: 2;
+        column-gap: 18pt;
+        column-fill: auto;
+    }
+ 
+    @page {
+        size: A4 portrait;
+        margin-block-start: 22mm;
+        margin-block-end: 25mm;
+        margin-inline-start: 17mm;
+        margin-inline-end: 17mm;
+    }
+}
+
 /* ****
 Header
 **** */
 
 header {
+    float: block-start;
+    float-reference: page;
+    margin-block-end: 14mm;
     margin-inline-start: auto;
     margin-inline-end: auto;
+    padding-inline: 15mm;
 }
 
 h1,
 h2.title:lang(en) {
     font-size: 25Q;
     text-align: center;
-    word-break: auto-phrase;
-    text-wrap: pretty;
 }
 h1 {
     margin-block-start: 16mm;
@@ -312,11 +326,6 @@ figure.normal-flow,
     margin-block: var(--spacing-block);
 }
 
-figure.breakable,
-figure.fig.breakable {
-    break-inside: auto;
-}
-
 /* ****
 図
 **** */
@@ -543,8 +552,7 @@ h3 {
     counter-reset: subsubsection;
 }
 h3::before {
-    content: counter(section) "." counter(subsection);
-    margin-inline-end: 1em;
+    content: counter(section) "." counter(subsection) " ";
 }
 h4, h5, h6 {
     margin-block: 0;
@@ -555,8 +563,7 @@ h4 {
     counter-reset: subsubsubsection;
   }
 h4::before {
-    content: counter(section) "." counter(subsection) "." counter(subsubsection);
-    margin-inline-end: 1em;
+    content: counter(section) "." counter(subsection) "." counter(subsubsection) " ";
 }
 
 /* h5はrun-in。h6もrun-inにしておく。 */
@@ -647,7 +654,7 @@ section:has(> h2.appendix) figure.table figcaption > :is(:lang(en))::before {
 ul,
 ol {
     margin-block: 0;
-    font-size: 100%;
+    font-size: 9pt;
     line-height: 1.5;
 }
 
@@ -682,7 +689,7 @@ ul li {
     display: flow-root;
 }
 ul li::before {
-    content: "\25CF";
+    content: "・";
     float: left;
     break-after: avoid; /* 番号と本体とが別段や別ページに別れないように */
     margin-inline-end: 0;
@@ -698,7 +705,7 @@ a.url {
     font-family: var(--code-font-family);
 }
 img {
-    max-width: 100%;
+    width: 100%;
 }
 embed {
     object-fit: scale-down;
@@ -710,11 +717,13 @@ embed {
 
 blockquote {
     margin-block: var(--spacing-block);
-    margin-inline: 0;
-    padding-inline-start: var(--spacing-inline);
+    margin-inline-start: var(--spacing-inline);
+    padding-inline-start: 0;
     text-indent: 0;
     text-align: justify;
-    border-inline-start: thin solid darkgrey;
+    /*
+    outline: thin solid orange;
+    */
 }
 blockquote > p {
     text-indent: 0;
